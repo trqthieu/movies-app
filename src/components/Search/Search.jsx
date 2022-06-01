@@ -16,52 +16,62 @@ function Search() {
   const [searchResults, setSearchResults] = useState([])
   const [input, setInput] = useState('')
   const [loading, setLoading] = useState(false)
+  const [error, setError] = useState()
   const debounce = useDebounce(input, 500)
   useEffect(() => {
     inputRef.current.focus()
     const getTrending = async () => {
-      setLoading(true)
-      const result = await request.getSearchResults(debounce)
-      setSearchResults(result)
+      try {
+        setLoading(true)
+        setError()
+        const result = await request.getSearchResults(debounce)
+        setSearchResults(result)
+      } catch (error) {
+        setError(error)
+      }
       setLoading(false)
     }
     if (debounce) {
       getTrending()
     }
+  }, [debounce])
+  useEffect(() => {
     if (!input) {
       setSearchResults([])
     }
-  }, [debounce, input])
+  }, [input])
   return (
     <div className='search__wrapper'>
-      <Container>
-        <div className='search_form'>
-          <div className='search_form_icon'>
-            <FontAwesomeIcon icon={faSearch} />
+      <div className='search_form_wrapper'>
+        <Container>
+          <div className='search_form'>
+            <div className='search_form_icon'>
+              <FontAwesomeIcon icon={faSearch} />
+            </div>
+            <input
+              ref={inputRef}
+              value={input}
+              onChange={e => setInput(e.target.value.trim())}
+              type='text'
+              placeholder='Search for a movie, tv show, person...'
+            />
+            <div className='search_form_status'>
+              {debounce && !loading && (
+                <div
+                  onClick={() => {
+                    setInput('')
+                    inputRef.current.focus()
+                  }}
+                  className='clear_icon'
+                >
+                  <FontAwesomeIcon icon={faXmark} />
+                </div>
+              )}
+              {loading && <div className='loading_icon'></div>}
+            </div>
           </div>
-          <input
-            ref={inputRef}
-            value={input}
-            onChange={e => setInput(e.target.value.trim())}
-            type='text'
-            placeholder='Search for a movie, tv show, person...'
-          />
-          <div className='search_form_status'>
-            {debounce && !loading && (
-              <div
-                onClick={() => {
-                  setInput('')
-                  inputRef.current.focus()
-                }}
-                className='clear_icon'
-              >
-                <FontAwesomeIcon icon={faXmark} />
-              </div>
-            )}
-            {loading && <div className='loading_icon'></div>}
-          </div>
-        </div>
-      </Container>
+        </Container>
+      </div>
       {searchResults.length > 0 && input && (
         <div className='search_list'>
           <div className='search_item'>
@@ -85,6 +95,11 @@ function Search() {
             )
           })}
         </div>
+      )}
+      {error && (
+        <Container>
+          <h3>{error.message}. Try again...</h3>
+        </Container>
       )}
     </div>
   )

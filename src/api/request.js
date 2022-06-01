@@ -11,6 +11,7 @@ const requestPaths = {
   fetchRomanceMovies: `/discover/movie?api_key=${API_KEY}&with_genres=10749`,
   fetchDocumantaries: `/discover/movie?api_key=${API_KEY}&with_genres=99`,
   searchQuery: `/search/movie?api_key=${API_KEY}`,
+  languagesQuery: `/configuration/languages?api_key=${API_KEY}`,
 }
 const request = {
   getSearchResults: async value => {
@@ -19,6 +20,10 @@ const request = {
     }
     const result = await axiosClient.get(requestPaths.searchQuery, { params })
     return result.data.results
+  },
+  getLanguages: async () => {
+    const result = await axiosClient.get(requestPaths.languagesQuery)
+    return result.data
   },
 }
 export default request

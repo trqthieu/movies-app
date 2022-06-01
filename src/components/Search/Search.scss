@@ -1,5 +1,9 @@
 .search__wrapper {
   background-color: #fff;
+  position: fixed;
+  top: 64px;
+  left: 0;
+  right: 0;
 }
 .search_form {
   color: #ccc;
@@ -26,13 +30,15 @@
     color: #000;
   }
 }
-.search_list {
+.search_form_wrapper {
   border-bottom: 1px solid rgba(0, 0, 0, 0.15);
+}
+.search_list {
   max-height: 294px;
   overflow-y: scroll;
 }
 .search_item {
-  border-top: 1px solid rgba(0, 0, 0, 0.15);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.15);
   &:first-child {
     background-color: rgba(0, 0, 0, 0.05);
     &:hover {
@@ -84,8 +90,8 @@
 .loading_icon::before {
   content: '';
   position: absolute;
-  width: 10px;
-  height: 10px;
+  width: 50%;
+  height: 50%;
   border: 1px solid transparent;
   border-top: 1px solid #000;
   border-bottom: 1px solid #000;
