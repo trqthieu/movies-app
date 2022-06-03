@@ -1,56 +1,33 @@
 import {
   faBars,
-  faPerson,
+  faBell,
   faPlus,
   faSearch,
   faUser,
   faXmark,
 } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import Tippy from '@tippyjs/react'
 import React, { useState } from 'react'
-import { Container, TabContainer } from 'react-bootstrap'
+import { Container } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
 import images from 'src/assets/images/images'
-import Search from '../Search/Search'
+import Language from '../Popup/Language/Language'
 import NavItem from '../NavItem/NavItem'
+import Notification from '../Popup/Notification/Notification'
+import Search from '../Search/Search'
 import './Header.scss'
-import Language from '../Language/Language'
+import 'tippy.js/dist/tippy.css'
+import 'tippy.js/themes/light.css'
+import Popup from '../Popup/Popup'
+import { popupUser, popupAdd, navList } from 'src/data/data'
 
-const movieNav = {
-  nav: { text: 'Movies', link: '/movie' },
-  subnav: [
-    { text: 'Popular', link: '/movie' },
-    { text: 'Now Playing', link: '/movie/now-playing' },
-    { text: 'Upcoming', link: '/movie/upcoming' },
-    { text: 'Top Rated', link: '/movie/top-rated' },
-  ],
-}
-const tvNav = {
-  nav: { text: 'TV Shows', link: '/tv' },
-  subnav: [
-    { text: 'Popular', link: '/tv' },
-    { text: 'Airing Today', link: '/tv/now-playing' },
-    { text: 'On TV', link: '/tv/upcoming' },
-    { text: 'Top Rated', link: '/tv/top-rated' },
-  ],
-}
-const personNav = {
-  nav: { text: 'People', link: '/person' },
-  subnav: [{ text: 'Popular People', link: '/person' }],
-}
-const moreNav = {
-  nav: { text: 'More', link: '#' },
-  subnav: [
-    { text: 'Discussions', link: '#' },
-    { text: 'Leaderboard', link: '#' },
-    { text: 'Support', link: '#' },
-    { text: 'API', link: '#' },
-  ],
-}
-const navList = [movieNav, tvNav, personNav, moreNav]
 function Header() {
   const [searching, setSearching] = useState(false)
   const [mobileNav, setMobileNav] = useState([])
+  const [popupIndex, setPopupIndex] = useState()
+  const [login, setLogin] = useState(true)
+  console.log(popupIndex)
   const handleMobileNav = index => {
     let newMobileNav = [...mobileNav]
     if (!newMobileNav.includes(index)) {
@@ -63,6 +40,14 @@ function Header() {
 
     setMobileNav(newMobileNav)
   }
+  const handlePopup = index => {
+    if (popupIndex === index) {
+      setPopupIndex()
+      return
+    }
+    setPopupIndex(index)
+  }
+
   return (
     <>
       <div className='header_wrapper'>
@@ -128,18 +113,54 @@ function Header() {
             <div className='header_right'>
               <div className='header_nav'>
                 <div className='header_nav_item icon'>
-                  <FontAwesomeIcon icon={faPlus} />
+                  <FontAwesomeIcon
+                    onClick={() => handlePopup(0)}
+                    icon={faPlus}
+                  />
+                  {popupIndex === 0 && <Popup popupData={popupAdd} />}
                 </div>
                 <div className='header_nav_item language'>
-                  <p>EN</p>
-                  <Language />
+                  <p onClick={() => handlePopup(1)} className='language_text'>
+                    EN
+                  </p>
+                  {popupIndex === 1 && <Language />}
                 </div>
-                <Link className='header_nav_item' to={'/login'}>
-                  Login
-                </Link>
-                <Link className='header_nav_item' to={'/sign-up'}>
-                  Join TMDB
-                </Link>
+                {!login ? (
+                  <>
+                    <Link className='header_nav_item' to={'/login'}>
+                      Login
+                    </Link>
+                    <Link className='header_nav_item' to={'/sign-up'}>
+                      Join TMDB
+                    </Link>
+                  </>
+                ) : (
+                  <>
+                    <div className='header_nav_item icon'>
+                      <FontAwesomeIcon
+                        onClick={() => handlePopup(2)}
+                        icon={faBell}
+                      />
+                      {popupIndex === 2 && <Notification />}
+                    </div>
+
+                    {/* <Tippy
+                      theme='light'
+                      arrow
+                      duration={100}
+                      content='Profile and Settings'
+                    > */}
+                    <div className='header_nav_item avatar'>
+                      <img
+                        onClick={() => handlePopup(3)}
+                        src={images.avatar}
+                        alt='avatar'
+                      />
+                      {popupIndex === 3 && <Popup popupData={popupUser} />}
+                    </div>
+                    {/* </Tippy> */}
+                  </>
+                )}
               </div>
               <div className='header_nav_item user'>
                 <FontAwesomeIcon icon={faUser} />
@@ -158,7 +179,10 @@ function Header() {
               >
                 {!searching && (
                   <FontAwesomeIcon
-                    onClick={() => setSearching(true)}
+                    onClick={() => {
+                      setSearching(true)
+                      handlePopup()
+                    }}
                     icon={faSearch}
                   />
                 )}

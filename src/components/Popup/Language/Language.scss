@@ -1,0 +1,28 @@
+.popup_wrapper select {
+  width: 100%;
+  font-size: 1.6rem;
+  border: none;
+  padding: 6px 12px;
+  background-color: #e4e7eb;
+  & option {
+    padding: 6px 12px;
+  }
+}
+.language_reset {
+  font-size: 1.6rem;
+  float: right;
+}
+.loading_popup {
+  display: flex;
+  justify-content: center;
+  & .loading_icon {
+    width: 60px;
+    height: 60px;
+  }
+}
+.select_language * {
+  background-color: #fff;
+  &:hover {
+    background-color: #f8f9fa;
+  }
+}

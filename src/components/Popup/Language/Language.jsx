@@ -4,9 +4,9 @@ import './Language.scss'
 function Language() {
   const [currentLanguage, setCurrentLangue] = useState('en')
   const [fallbackLanguage, setFallbackLangue] = useState('none')
-  console.log(currentLanguage)
   const [languages, setLanguages] = useState([])
   const [loading, setLoading] = useState(false)
+  const [error, setError] = useState()
   const handleReset = () => {
     setCurrentLangue('en')
     setFallbackLangue('none')
@@ -15,6 +15,7 @@ function Language() {
   useEffect(() => {
     const getLanguages = async () => {
       setLoading(true)
+      setError()
       try {
         const result = await request.getLanguages()
         result.sort((a, b) =>
@@ -26,27 +27,28 @@ function Language() {
         )
         setLanguages(result)
       } catch (error) {
-        console.log(error)
+        setError(error)
       }
       setLoading(false)
     }
     getLanguages()
   }, [])
   return (
-    <div className='language_wrapper'>
+    <div className='popup_wrapper'>
       {loading ? (
-        <div className='loading_language'>
+        <div className='loading_popup'>
           <div className='loading_icon'></div>
         </div>
       ) : (
         <>
-          <h3 className='language_title'>Language Preferences</h3>
+          <h3 className='popup_title'>Language Preferences</h3>
           <p onClick={handleReset} className='language_reset'>
             Reset
           </p>
           <div className='default_langue'>
             <p className='title'>Default Language</p>
             <select
+              className='select_language'
               value={currentLanguage}
               onChange={e => setCurrentLangue(e.target.value)}
               id='default-language'
@@ -63,6 +65,7 @@ function Language() {
           <div className='fallback_langue'>
             <p className='title'>Fallback Language</p>
             <select
+              className='select_language'
               onChange={e => setFallbackLangue(e.target.value)}
               value={fallbackLanguage}
               id='fallback-language'
@@ -79,6 +82,7 @@ function Language() {
           </div>
         </>
       )}
+      {error && <h3>{error.message}. Try again...</h3>}
     </div>
   )
 }

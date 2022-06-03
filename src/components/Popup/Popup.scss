@@ -1,0 +1,40 @@
+.popup_wrapper.popup {
+  width: 180px;
+  padding: 0;
+}
+
+.popup_group {
+  padding: 4px 0;
+  border-top: 1px solid #ccc;
+  & a {
+    padding: 6px 20px;
+    display: block;
+    font-size: 1.4rem;
+    text-decoration: none;
+    color: rgba(0, 0, 0, 0.6);
+    &:hover {
+      color: #fff;
+      background-color: var(--darkBlue);
+    }
+  }
+  &:first-child {
+    border-radius: 4px;
+    border: none;
+  }
+}
+.popup_group.user {
+  border: none;
+  padding: 16px 0;
+  & .user_name {
+    font-weight: 600;
+    padding: 4px 20px;
+  }
+  & .link_profile {
+    font-size: 1.2rem;
+    padding: 0 20px;
+    &:hover {
+      color: rgba(0, 0, 0, 0.6);
+      background-color: #fff;
+    }
+  }
+}
