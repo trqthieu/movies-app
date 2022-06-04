@@ -1,4 +1,4 @@
-import axiosClient from './axios'
+import mainAxiosClient from './axios'
 
 const API_KEY = '62952951c7d597d5ecd719dd07582bee'
 const requestPaths = {
@@ -10,7 +10,9 @@ const requestPaths = {
   fetchHorrorMovies: `/discover/movie?api_key=${API_KEY}&with_genres=27`,
   fetchRomanceMovies: `/discover/movie?api_key=${API_KEY}&with_genres=10749`,
   fetchDocumantaries: `/discover/movie?api_key=${API_KEY}&with_genres=99`,
-  searchQuery: `/search/movie?api_key=${API_KEY}`,
+
+  multiSearchQuery: `/search/multi?api_key=${API_KEY}`,
+  moviesSearchQuery: `/search/movie?api_key=${API_KEY}`,
   languagesQuery: `/configuration/languages?api_key=${API_KEY}`,
 }
 const request = {
@@ -18,12 +20,36 @@ const request = {
     const params = {
       query: value,
     }
-    const result = await axiosClient.get(requestPaths.searchQuery, { params })
+    const result = await mainAxiosClient.get(requestPaths.multiSearchQuery, {
+      params,
+    })
     return result.data.results
   },
-  getLanguages: async () => {
-    const result = await axiosClient.get(requestPaths.languagesQuery)
+  getMovies: async (name, page = 1) => {
+    const params = {
+      query: name,
+      page,
+    }
+    const result = await mainAxiosClient.get(requestPaths.moviesSearchQuery, {
+      params,
+    })
     return result.data
+  },
+  getLanguages: async () => {
+    const result = await mainAxiosClient.get(requestPaths.languagesQuery)
+    return result.data
+  },
+  getPopular: async type => {
+    const result = await mainAxiosClient.get(
+      `/${type}/popular?api_key=${API_KEY}`
+    )
+    return result.data.results
+  },
+  getTrending: async type => {
+    const result = await mainAxiosClient.get(
+      `/trending/all/${type}?api_key=${API_KEY}`
+    )
+    return result.data.results
   },
 }
 export default request

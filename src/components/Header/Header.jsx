@@ -27,7 +27,6 @@ function Header() {
   const [mobileNav, setMobileNav] = useState([])
   const [popupIndex, setPopupIndex] = useState()
   const [login, setLogin] = useState(true)
-  console.log(popupIndex)
   const handleMobileNav = index => {
     let newMobileNav = [...mobileNav]
     if (!newMobileNav.includes(index)) {

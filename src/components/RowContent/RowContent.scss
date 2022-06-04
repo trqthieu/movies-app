@@ -1,0 +1,38 @@
+.row_content {
+  padding-top: 30px;
+}
+.row_heading {
+  display: flex;
+  align-items: center;
+}
+.row_title {
+  margin-right: 20px;
+  font-weight: 600;
+  font-size: 2.4rem;
+}
+.row_select {
+  border: 1px solid #000;
+  border-radius: 30px;
+  font-weight: 600;
+  span {
+    padding: 4px 20px;
+    border-radius: 30px;
+    cursor: pointer;
+  }
+}
+.select_active {
+  background-color: var(--darkBlue);
+  color: #fff;
+  border-radius: 30px;
+}
+.row_card {
+  padding: 20px 0;
+  display: flex;
+  overflow-x: scroll;
+}
+.card_item {
+  margin-right: 20px;
+  &:last-child {
+    margin-right: 0;
+  }
+}

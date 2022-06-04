@@ -18,6 +18,14 @@ function Search() {
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState()
   const debounce = useDebounce(input, 500)
+  const handleInput = e => {
+    const value = e.target.value
+    if (value.startsWith(' ')) {
+      setInput(value.trim())
+      return
+    }
+    setInput(value)
+  }
   useEffect(() => {
     inputRef.current.focus()
     const getTrending = async () => {
@@ -25,6 +33,7 @@ function Search() {
         setLoading(true)
         setError()
         const result = await request.getSearchResults(debounce)
+        console.log(result)
         setSearchResults(result)
       } catch (error) {
         setError(error)
@@ -41,7 +50,7 @@ function Search() {
     }
   }, [input])
   return (
-    <div className='search__wrapper'>
+    <div className='search_wrapper'>
       <div className='search_form_wrapper'>
         <Container>
           <div className='search_form'>
@@ -51,7 +60,7 @@ function Search() {
             <input
               ref={inputRef}
               value={input}
-              onChange={e => setInput(e.target.value.trim())}
+              onChange={handleInput}
               type='text'
               placeholder='Search for a movie, tv show, person...'
             />
@@ -88,7 +97,9 @@ function Search() {
                 <Container>
                   <div className='result'>
                     <FontAwesomeIcon icon={faSearch} />
-                    <p className='text'>{searchResult.original_title}</p>
+                    <p className='text'>
+                      {searchResult.name || searchResult.original_title}
+                    </p>
                   </div>
                 </Container>
               </div>
