@@ -51,5 +51,23 @@ const request = {
     )
     return result.data.results
   },
+  getTrailer: async type => {
+    const result = await mainAxiosClient.get(
+      `/discover/${type}?api_key=${API_KEY}`
+    )
+    return result.data.results
+  },
+  getDetails: async (type, id) => {
+    const result = await mainAxiosClient.get(
+      `/${type}/${id}?api_key=${API_KEY}`
+    )
+    return result.data
+  },
+  getVideos: async (type, id) => {
+    const result = await mainAxiosClient.get(
+      `/${type}/${id}/videos?api_key=${API_KEY}`
+    )
+    return result.data
+  },
 }
 export default request

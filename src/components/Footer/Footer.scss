@@ -1,0 +1,45 @@
+.footer {
+  padding: 80px 0;
+  background-color: var(--darkBlue);
+  color: #fff;
+  img {
+    width: 140px;
+    margin-bottom: 40px;
+  }
+
+  button {
+    white-space: wrap;
+    font-size: 1.8rem;
+    line-height: 2.4rem;
+    text-transform: uppercase;
+    font-weight: 700;
+    padding: 8px 16px;
+    border-radius: 8px;
+    a {
+      text-decoration: none;
+      color: var(--lightBlue);
+      &:hover {
+        color: var(--lightBlue);
+      }
+    }
+  }
+}
+.col_item {
+  margin-bottom: 20px;
+  * {
+    color: #fff;
+    text-decoration: none;
+  }
+  h4 {
+    font-size: 2rem;
+    font-weight: 700;
+    text-transform: uppercase;
+  }
+  a {
+    display: block;
+    font-size: 1.7rem;
+    &:hover {
+      color: #fff;
+    }
+  }
+}

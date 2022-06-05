@@ -39,7 +39,6 @@ const cardPopupData = {
   ],
 }
 function Card({ data }) {
-  console.log(data)
   const formatDate = date => {
     const monthNames = [
       'Jan',
@@ -62,11 +61,13 @@ function Card({ data }) {
   }
   return (
     <div className='card'>
-      <div className='card_img'>
-        <img
-          src={`https://image.tmdb.org/t/p/original${data.poster_path}`}
-          alt=''
-        />
+      <div className='card_img_wrapper'>
+        <div className='card_img'>
+          <img
+            src={`https://image.tmdb.org/t/p/original${data.poster_path}`}
+            alt=''
+          />
+        </div>
         <div className='card_actions'>
           <FontAwesomeIcon className='icon' icon={faEllipsis} />
           <div className='card_popup'>

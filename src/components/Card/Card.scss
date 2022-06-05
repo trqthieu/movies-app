@@ -3,7 +3,7 @@
   border: none !important;
   //   margin-left: 20px;
 }
-.card_img {
+.card_img_wrapper {
   position: relative;
   img {
     border-radius: 4px;
@@ -91,6 +91,9 @@
   }
 }
 .card_popup {
+  padding: 4px 0;
+  background-color: #fff;
+  color: #000;
   z-index: 1;
   display: none;
   position: absolute;

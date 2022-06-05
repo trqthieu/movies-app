@@ -1,0 +1,91 @@
+.trailer {
+  width: 300px;
+  padding-bottom: 20px;
+  .card_img_wrapper {
+    transition: all 0.25s;
+    cursor: pointer;
+    .card_img {
+      position: relative;
+    }
+    .btn_play_trailer {
+      transition: all 0.25s;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-size: 3rem;
+    }
+    &:hover {
+      transform: scale(90%);
+      & .btn_play_trailer {
+        transform: scale(120%) translate(-50%, -50%);
+      }
+    }
+  }
+}
+.row_content.row_trailer {
+  color: #fff;
+  transition: all 0.5s;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+.trailer_desc {
+  padding-top: 20px;
+  text-align: center;
+  &_name {
+    font-weight: 600;
+    font-size: 1.9rem;
+    line-height: 2.4rem;
+  }
+}
+.row_select.trailer_select {
+  border: 1px solid var(--lightGreen);
+}
+.trailer_active {
+  background-color: var(--lightGreen);
+  color: var(--darkBlue);
+  border-radius: 30px;
+}
+.video_popup {
+  background-color: #000;
+  position: fixed;
+  z-index: 999;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  .custom_bar {
+    width: 100%;
+    background-color: #000;
+    color: #ccc;
+    text-align: right;
+    .icon {
+      transition: all 0.2s;
+      width: 20px;
+      height: 20px;
+      border-radius: 10px;
+      cursor: pointer;
+      font-size: 2rem;
+      padding: 10px;
+      margin: 10px 20px 0 0;
+      &:hover {
+        color: #fff;
+        background-color: rgba(204, 204, 204, 0.1);
+      }
+    }
+  }
+}
+.video_popup_overlay {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: #000;
+  opacity: 0.5;
+  z-index: 998;
+}
