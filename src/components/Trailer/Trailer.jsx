@@ -10,10 +10,12 @@ import {
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import React, { useState } from 'react'
 import request from 'src/api/request'
+import images from 'src/assets/images/images'
 import './Trailer.scss'
 function Trailer({ type, data, handleBackground }) {
   const [videoPath, setVideoPath] = useState()
   const [showVideo, setShowVideo] = useState(false)
+  const [loadedImage, setLoadedImage] = useState(false)
   const handleTrailerClick = async () => {
     const result = await request.getVideos(type, data.id)
     console.log(result)
@@ -54,7 +56,13 @@ function Trailer({ type, data, handleBackground }) {
             <FontAwesomeIcon icon={faPlay} />
           </div>
           <img
-            src={`https://image.tmdb.org/t/p/original${data.backdrop_path}`}
+            style={!loadedImage ? { height: '170px' } : {}}
+            onLoad={() => setLoadedImage(true)}
+            src={
+              loadedImage
+                ? `https://image.tmdb.org/t/p/original${data.backdrop_path}`
+                : images.loadingImage
+            }
             alt=''
           />
         </div>

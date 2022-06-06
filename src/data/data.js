@@ -7,12 +7,13 @@ const movieNav = {
     { text: 'Top Rated', link: '/movie/top-rated' },
   ],
 }
+
 const tvNav = {
   nav: { text: 'TV Shows', link: '/tv' },
   subnav: [
     { text: 'Popular', link: '/tv' },
-    { text: 'Airing Today', link: '/tv/now-playing' },
-    { text: 'On TV', link: '/tv/upcoming' },
+    { text: 'Airing Today', link: '/tv/airing-today' },
+    { text: 'On TV', link: '/tv/on-the-air' },
     { text: 'Top Rated', link: '/tv/top-rated' },
   ],
 }

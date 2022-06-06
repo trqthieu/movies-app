@@ -4,6 +4,7 @@ import Header from 'src/components/Header/Header.jsx'
 import routesPath from 'src/routes/routes'
 
 import 'bootstrap/dist/css/bootstrap.min.css'
+import Footer from './components/Footer/Footer'
 function App() {
   return (
     <BrowserRouter>
@@ -13,6 +14,7 @@ function App() {
           <Route key={index} path={route.path} element={route.element} />
         ))}
       </Routes>
+      <Footer />
     </BrowserRouter>
   )
 }

@@ -1,21 +1,17 @@
-import mainAxiosClient from './axios'
+import mainAxiosClient, { imageAxiosClient } from './axios'
 
 const API_KEY = '62952951c7d597d5ecd719dd07582bee'
 const requestPaths = {
-  fetchTrending: `/trending/all/week?api_key=${API_KEY}&language=en-US`,
-  fetchNetflixOriginals: `/discover/tv?api_key=${API_KEY}&with_networks=213`,
-  fetchTopRated: `/movie/top_rated?api_key=${API_KEY}&language=en-US`,
-  fetchActionMovies: `/discover/movie?api_key=${API_KEY}&with_genres=28`,
-  fetchComedyMovies: `/discover/movie?api_key=${API_KEY}&with_genres=35`,
-  fetchHorrorMovies: `/discover/movie?api_key=${API_KEY}&with_genres=27`,
-  fetchRomanceMovies: `/discover/movie?api_key=${API_KEY}&with_genres=10749`,
-  fetchDocumantaries: `/discover/movie?api_key=${API_KEY}&with_genres=99`,
-
   multiSearchQuery: `/search/multi?api_key=${API_KEY}`,
   moviesSearchQuery: `/search/movie?api_key=${API_KEY}`,
   languagesQuery: `/configuration/languages?api_key=${API_KEY}`,
+  countriesQuery: `/configuration/countries?api_key=${API_KEY}`,
 }
 const request = {
+  getImage: async path => {
+    const result = imageAxiosClient.get(path)
+    return result
+  },
   getSearchResults: async value => {
     const params = {
       query: value,
@@ -24,6 +20,10 @@ const request = {
       params,
     })
     return result.data.results
+  },
+  getCountryResults: async () => {
+    const result = await mainAxiosClient.get(requestPaths.countriesQuery)
+    return result.data
   },
   getMovies: async (name, page = 1) => {
     const params = {
@@ -39,9 +39,13 @@ const request = {
     const result = await mainAxiosClient.get(requestPaths.languagesQuery)
     return result.data
   },
-  getPopular: async type => {
+  getPopular: async (type, page = 1) => {
+    const params = { page }
     const result = await mainAxiosClient.get(
-      `/${type}/popular?api_key=${API_KEY}`
+      `/${type}/popular?api_key=${API_KEY}`,
+      {
+        params,
+      }
     )
     return result.data.results
   },

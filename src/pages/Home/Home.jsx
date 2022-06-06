@@ -52,8 +52,8 @@ function Home() {
             <div className='leaderboard_heading'>
               <span className='leaderboard_title'>Leaderboard</span>
               <div className='leaderboard_type'>
-                <p className>All Time Edits</p>
-                <p className>Edits This Week</p>
+                <p>All Time Edits</p>
+                <p>Edits This Week</p>
               </div>
             </div>
             <div className='leaderboard_content'>
@@ -99,7 +99,6 @@ function Home() {
           </Container>
         </div>
       </div>
-      <Footer />
     </div>
   )
 }

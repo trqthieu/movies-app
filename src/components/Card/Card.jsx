@@ -6,65 +6,52 @@ import {
   faStar,
 } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import React from 'react'
+import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
-import Popup from '../Popup/Popup'
+import images from 'src/assets/images/images'
 import './Card.scss'
-const cardPopupData = {
-  groups: [
-    [
-      {
-        text: 'Logout',
-        path: '/profile',
-      },
-    ],
-    [
-      {
-        text: 'Logout',
-        path: '/profile',
-      },
-    ],
-    [
-      {
-        text: 'Logout',
-        path: '/profile',
-      },
-    ],
-    [
-      {
-        text: 'Logout',
-        path: '/profile',
-      },
-    ],
-  ],
+
+const formatDate = date => {
+  const monthNames = [
+    'Jan',
+    'Feb',
+    'Mar',
+    'Apr',
+    'May',
+    'Jun',
+    'Jul',
+    'Aug',
+    'Sep',
+    'Oct',
+    'Nov',
+    'Dec',
+  ]
+  const formattedDate = date.split('-')
+  return `${monthNames[formattedDate[1] - 1]} ${formattedDate[2]}, ${
+    formattedDate[0]
+  }`
 }
 function Card({ data }) {
-  const formatDate = date => {
-    const monthNames = [
-      'Jan',
-      'Feb',
-      'Mar',
-      'Apr',
-      'May',
-      'Jun',
-      'Jul',
-      'Aug',
-      'Sep',
-      'Oct',
-      'Nov',
-      'Dec',
-    ]
-    const formattedDate = date.split('-')
-    return `${monthNames[formattedDate[1] - 1]} ${formattedDate[2]}, ${
-      formattedDate[0]
-    }`
-  }
+  const [loadedImage, setLoadedImage] = useState(false)
+
   return (
     <div className='card'>
       <div className='card_img_wrapper'>
         <div className='card_img'>
           <img
-            src={`https://image.tmdb.org/t/p/original${data.poster_path}`}
+            style={
+              !loadedImage
+                ? {
+                    height: '225px',
+                  }
+                : {}
+            }
+            onLoad={() => setLoadedImage(true)}
+            src={
+              loadedImage
+                ? `https://image.tmdb.org/t/p/original${data.poster_path}`
+                : images.loadingImage
+            }
             alt=''
           />
         </div>

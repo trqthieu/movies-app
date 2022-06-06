@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { Container } from 'react-bootstrap'
 import request from 'src/api/request'
+import images from 'src/assets/images/images'
 import Trailer from 'src/components/Trailer/Trailer'
 import Card from '../Card/Card'
 import './RowContent.scss'
@@ -31,6 +32,12 @@ function RowContent({ popular, trending, trailer }) {
       ),
     url(https://image.tmdb.org/t/p/original${background})`,
   }
+  const TRENDING_STYLES = {
+    backgroundImage: `url(${images.backgroundTrending})`,
+    backgroundRepeat: 'no-repeat',
+    backgroundPosition: '0 100px',
+    backgroundSize: 'cover',
+  }
 
   const getPopular = async type => {
     const result = await request.getPopular(type)
@@ -58,7 +65,7 @@ function RowContent({ popular, trending, trailer }) {
   }, [activeType])
   return (
     <div
-      style={trailer ? TRAILER_STYLES : {}}
+      style={trailer ? TRAILER_STYLES : trending ? TRENDING_STYLES : {}}
       className={!trailer ? `row_content` : `row_content row_trailer`}
     >
       <Container>
