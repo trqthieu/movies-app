@@ -1,5 +1,5 @@
+import { Container, Grid } from '@mui/material'
 import React from 'react'
-import { Col, Container, Row } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
 import images from 'src/assets/images/images'
 import './Footer.scss'
@@ -89,24 +89,24 @@ function Footer() {
   return (
     <div className='footer'>
       <Container>
-        <Row>
-          <Col lg={3}>
-            <Row className='justify-content-center'>
-              <Col>
+        <Grid container spacing={2}>
+          <Grid item lg={3}>
+            <Grid container spacing={2} className='justify-content-center'>
+              <Grid item>
                 <img className='img' src={images.logo2} alt='logo' />
-              </Col>
-              <Col>
+              </Grid>
+              <Grid item>
                 <button>
                   <Link to={'/sign-up'}>Join the community</Link>
                 </button>
-              </Col>
-            </Row>
-          </Col>
-          <Col lg={9}>
-            <Row>
+              </Grid>
+            </Grid>
+          </Grid>
+          <Grid item lg={9}>
+            <Grid container spacing={4}>
               {footerData.map((data, index) => {
                 return (
-                  <Col key={index} className='col_item' lg={3} sm={6}>
+                  <Grid item key={index} className='col_item' lg={3} sm={6}>
                     <h4>{data.title}</h4>
                     {data.content.map((item, index) => {
                       return (
@@ -115,12 +115,12 @@ function Footer() {
                         </Link>
                       )
                     })}
-                  </Col>
+                  </Grid>
                 )
               })}
-            </Row>
-          </Col>
-        </Row>
+            </Grid>
+          </Grid>
+        </Grid>
       </Container>
     </div>
   )

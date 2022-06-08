@@ -56,7 +56,6 @@ function Trailer({ type, data, handleBackground }) {
             <FontAwesomeIcon icon={faPlay} />
           </div>
           <img
-            style={!loadedImage ? { height: '170px' } : {}}
             onLoad={() => setLoadedImage(true)}
             src={
               loadedImage

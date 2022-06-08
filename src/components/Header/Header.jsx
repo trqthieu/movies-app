@@ -9,7 +9,6 @@ import {
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import Tippy from '@tippyjs/react'
 import React, { useState } from 'react'
-import { Container } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
 import images from 'src/assets/images/images'
 import Language from '../Popup/Language/Language'
@@ -21,6 +20,7 @@ import 'tippy.js/dist/tippy.css'
 import 'tippy.js/themes/light.css'
 import Popup from '../Popup/Popup'
 import { popupUser, popupAdd, navList } from 'src/data/data'
+import { Container } from '@mui/material'
 
 function Header() {
   const [searching, setSearching] = useState(false)

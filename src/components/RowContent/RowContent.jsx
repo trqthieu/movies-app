@@ -1,5 +1,5 @@
+import { Container } from '@mui/material'
 import React, { useEffect, useState } from 'react'
-import { Container } from 'react-bootstrap'
 import request from 'src/api/request'
 import images from 'src/assets/images/images'
 import Trailer from 'src/components/Trailer/Trailer'

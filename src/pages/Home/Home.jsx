@@ -1,5 +1,5 @@
+import { Container, Grid } from '@mui/material'
 import React from 'react'
-import { Col, Container, Row } from 'react-bootstrap'
 import Banner from 'src/components/Banner/Banner'
 import Card from 'src/components/Card/Card'
 import Footer from 'src/components/Footer/Footer'
@@ -57,10 +57,10 @@ function Home() {
               </div>
             </div>
             <div className='leaderboard_content'>
-              <Row>
+              <Grid container spacing={2}>
                 {leaderboardData.users.map((user, index) => {
                   return (
-                    <Col key={index} md={6}>
+                    <Grid item key={index} md={6}>
                       <div className='leaderboard_item'>
                         <img src={user.avatar} alt='' />
                         <div className='leaderboard_info'>
@@ -91,10 +91,10 @@ function Home() {
                           </div>
                         </div>
                       </div>
-                    </Col>
+                    </Grid>
                   )
                 })}
-              </Row>
+              </Grid>
             </div>
           </Container>
         </div>

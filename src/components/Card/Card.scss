@@ -82,17 +82,13 @@
     width: 38px;
     height: 38px;
     border-radius: 50%;
-    border: 2px solid var(--lightGreen);
+    border: 2px solid #1d4028;
   }
-  &::after {
-    // position: absolute;
-    // content: '';
-    // width: 38px;
-    // height: 38px;
-    // border-radius: 50%;
-    // border: 2px solid #ccc;
-    // background-image: linear-gradient(180deg, transparent 50%, #a2ecfb 50%),
-    //   linear-gradient(90deg, #a2ecfb 50%, transparent 50%);
+
+  .MuiCircularProgress-root {
+    border-radius: 50%;
+    position: absolute;
+    color: var(--lightGreen);
   }
 }
 .card_popup {

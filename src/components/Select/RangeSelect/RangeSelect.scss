@@ -1,0 +1,29 @@
+.range_select {
+  .range_slider {
+    color: var(--lightBlue);
+    padding: 0;
+  }
+  .range_ticks {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    .tick_item {
+      width: 1px;
+      height: 5px;
+      background-color: #ccc;
+      &.break_point {
+        height: 10px;
+      }
+    }
+  }
+  .range_breakpoint {
+    font-size: 1.44rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+  }
+  .MuiSlider-valueLabelOpen {
+    font-size: 1.4rem;
+    background-color: var(--darkBlue);
+  }
+}

@@ -14,7 +14,6 @@ function LanguageSelect() {
             ? -1
             : 0
         )
-        console.log(result)
         setLanguages(result)
       } catch (error) {
         console.log(error)

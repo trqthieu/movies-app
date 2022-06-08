@@ -6,6 +6,7 @@ import {
   faStar,
 } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { CircularProgress } from '@mui/material'
 import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
 import images from 'src/assets/images/images'
@@ -39,13 +40,6 @@ function Card({ data }) {
       <div className='card_img_wrapper'>
         <div className='card_img'>
           <img
-            style={
-              !loadedImage
-                ? {
-                    height: '225px',
-                  }
-                : {}
-            }
             onLoad={() => setLoadedImage(true)}
             src={
               loadedImage
@@ -85,6 +79,21 @@ function Card({ data }) {
         <div className='card_rate_wrapper'>
           <div className='card_rate'>
             <span className='card_rate_text'>{data.vote_average * 10}%</span>
+            <CircularProgress
+              className='progress_bar'
+              variant='determinate'
+              value={data.vote_average * 10}
+              style={{
+                width: '38px',
+                height: '38px',
+                color:
+                  data.vote_average * 10 < 40
+                    ? '#d9235f'
+                    : data.vote_average * 10 < 70
+                    ? '#d2d531'
+                    : '',
+              }}
+            />
           </div>
         </div>
       </div>

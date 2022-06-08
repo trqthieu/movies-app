@@ -4,8 +4,8 @@ import {
   faXmark,
 } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { Container } from '@mui/material'
 import React, { useEffect, useRef, useState } from 'react'
-import { Container } from 'react-bootstrap'
 import axiosClient from 'src/api/axios'
 import request from 'src/api/request'
 import requestPaths from 'src/api/request'
