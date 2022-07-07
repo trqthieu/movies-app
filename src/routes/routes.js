@@ -10,6 +10,7 @@ import TopRated from 'src/pages/Movie/TopRated/TopRated'
 import TVTopRated from 'src/pages/Tv/TopRated/TopRated'
 import AiringToday from 'src/pages/Tv/AiringToday/AiringToday'
 import OnTV from 'src/pages/Tv/OnTV/OnTV'
+import Details from 'src/pages/Details/Details'
 
 export const routesConfig = {
   home: '/',
@@ -40,6 +41,7 @@ export const moviePaths = {
   nowPlaying: '/now-playing',
   upcoming: '/upcoming',
   topRated: '/top-rated',
+  details: '/:id',
 }
 export const movieRoutes = [
   {
@@ -58,12 +60,17 @@ export const movieRoutes = [
     path: moviePaths.topRated,
     element: <TopRated />,
   },
+  {
+    path: moviePaths.details,
+    element: <Details />,
+  },
 ]
 export const tvPaths = {
   popular: '/',
   airingToday: '/airing-today',
   onTV: '/on-the-air',
   topRated: '/top-rated',
+  details: '/:id',
 }
 export const tvRoutes = [
   {
@@ -81,6 +88,10 @@ export const tvRoutes = [
   {
     path: tvPaths.topRated,
     element: <TVTopRated />,
+  },
+  {
+    path: tvPaths.details,
+    element: <Details />,
   },
 ]
 export default routesPath

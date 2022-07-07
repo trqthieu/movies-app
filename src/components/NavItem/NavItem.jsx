@@ -5,9 +5,7 @@ function NavItem({ navItem }) {
   const { nav, subnav } = navItem
   return (
     <div className='header_nav_item'>
-      <Link className='link' to={nav.link}>
-        {nav.text}
-      </Link>
+      <p className='link'>{nav.text}</p>
       <div className='header_subnav'>
         {subnav.map((item, index) => {
           return (

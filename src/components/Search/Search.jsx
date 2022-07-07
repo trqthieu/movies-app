@@ -6,9 +6,7 @@ import {
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { Container } from '@mui/material'
 import React, { useEffect, useRef, useState } from 'react'
-import axiosClient from 'src/api/axios'
 import request from 'src/api/request'
-import requestPaths from 'src/api/request'
 import useDebounce from 'src/hooks/useDebounce'
 import './Search.scss'
 function Search() {

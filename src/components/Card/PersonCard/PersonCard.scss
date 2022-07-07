@@ -1,0 +1,34 @@
+.person_card {
+  height: 100%;
+  border: 1px solid var(--lightGrey);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  .person_card_img {
+    height: 100%;
+  }
+  img {
+    width: 100%;
+    height: 100%;
+  }
+  .desc {
+    padding: 8px 10px;
+    p {
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+  }
+}
+.person_card_name {
+  font-size: 1.8rem;
+  font-weight: 600;
+  &:hover {
+    color: var(--lightBlue);
+    cursor: pointer;
+  }
+}
+.person_card_knownfor {
+  font-size: 1.5rem;
+  color: rgba(0, 0, 0, 0.6);
+}

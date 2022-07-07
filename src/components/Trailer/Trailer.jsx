@@ -11,6 +11,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import React, { useState } from 'react'
 import request from 'src/api/request'
 import images from 'src/assets/images/images'
+import TrailerPopup from '../TrailerPopup/TrailerPopup'
 import './Trailer.scss'
 function Trailer({ type, data, handleBackground }) {
   const [videoPath, setVideoPath] = useState()
@@ -18,33 +19,17 @@ function Trailer({ type, data, handleBackground }) {
   const [loadedImage, setLoadedImage] = useState(false)
   const handleTrailerClick = async () => {
     const result = await request.getVideos(type, data.id)
-    console.log(result)
     setShowVideo(true)
     setVideoPath(result.results[0].key)
   }
   return (
     <div className='trailer'>
       {showVideo && (
-        <>
-          <div className='video_popup'>
-            <div className='custom_bar'>
-              <FontAwesomeIcon
-                onClick={() => setShowVideo(false)}
-                className='icon'
-                icon={faXmark}
-              />
-            </div>
-            <iframe
-              allow='autoplay'
-              className='youtube_frame'
-              width='928'
-              height='584'
-              title={data.id}
-              src={`https://www.youtube.com/embed/${videoPath}?autoplay=1`}
-            ></iframe>
-          </div>
-          <div className='video_popup_overlay'></div>
-        </>
+        <TrailerPopup
+          videoPath={videoPath}
+          setShowVideo={setShowVideo}
+          id={data.id}
+        />
       )}
       <div className='card_img_wrapper'>
         <div

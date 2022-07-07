@@ -7,10 +7,13 @@ import {
 } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { CircularProgress } from '@mui/material'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import images from 'src/assets/images/images'
 import './Card.scss'
+import { LazyLoadImage } from 'react-lazy-load-image-component'
+import 'react-lazy-load-image-component/src/effects/opacity.css'
+import request, { IMAGE_PATH } from 'src/api/request'
 
 const formatDate = date => {
   const monthNames = [
@@ -32,25 +35,20 @@ const formatDate = date => {
     formattedDate[0]
   }`
 }
-function Card({ data }) {
-  const [loadedImage, setLoadedImage] = useState(false)
-
+function Card({ data, type }) {
   return (
     <div className='card'>
       <div className='card_img_wrapper'>
         <div className='card_img'>
-          <img
-            onLoad={() => setLoadedImage(true)}
-            src={
-              loadedImage
-                ? `https://image.tmdb.org/t/p/original${data.poster_path}`
-                : images.loadingImage
-            }
+          <LazyLoadImage
+            effect='opacity'
+            src={`${IMAGE_PATH}${data.poster_path}`}
             alt=''
           />
         </div>
         <div className='card_actions'>
           <FontAwesomeIcon className='icon' icon={faEllipsis} />
+
           <div className='card_popup'>
             <div className='card_popup_item'>
               <FontAwesomeIcon className='card_popup_item_icon' icon={faList} />
@@ -78,14 +76,16 @@ function Card({ data }) {
         </div>
         <div className='card_rate_wrapper'>
           <div className='card_rate'>
-            <span className='card_rate_text'>{data.vote_average * 10}%</span>
+            <span className='card_rate_text'>
+              {(data.vote_average * 10).toFixed()}%
+            </span>
             <CircularProgress
               className='progress_bar'
               variant='determinate'
               value={data.vote_average * 10}
               style={{
-                width: '38px',
-                height: '38px',
+                width: '90%',
+                height: '90%',
                 color:
                   data.vote_average * 10 < 40
                     ? '#d9235f'
@@ -98,11 +98,12 @@ function Card({ data }) {
         </div>
       </div>
       <div className='card_desc'>
-        <Link to={'/'}>
+        <Link to={`/${type}/${data.id}`}>
           <h4 className='card_desc_name'>{data.name || data.title}</h4>
         </Link>
         <p className='card_desc_date'>
-          {formatDate(data.first_air_date || data.release_date)}
+          {(data.first_air_date || data.release_date) &&
+            formatDate(data.first_air_date || data.release_date)}
         </p>
       </div>
     </div>

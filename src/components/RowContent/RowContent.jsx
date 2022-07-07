@@ -6,17 +6,20 @@ import Trailer from 'src/components/Trailer/Trailer'
 import Card from '../Card/Card'
 import './RowContent.scss'
 function RowContent({ popular, trending, trailer }) {
+  let linkType = ['tv', 'movie']
   let title = "What's popular"
   let type = ['tv', 'movie']
   let selectType = ['On TV', 'In Theaters']
   if (trending) {
     title = 'Trending'
     type = ['day', 'week']
+    linkType = ['movie', 'tv']
     selectType = ['Today', 'This Week']
   } else if (trailer) {
     title = 'Latest Trailers'
   }
   const [activeType, setActiveType] = useState(type[0])
+  const [cardType, setCardType] = useState('movie')
   const [listCard, setListCard] = useState([])
   const [background, setBackground] = useState(
     '/fgYfch0MGfNEpgzPst49ThKUqA4.jpg'
@@ -61,8 +64,10 @@ function RowContent({ popular, trending, trailer }) {
     } else if (trailer) {
       getTrailer(activeType)
     }
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [activeType])
+
   return (
     <div
       style={trailer ? TRAILER_STYLES : trending ? TRENDING_STYLES : {}}
@@ -101,7 +106,10 @@ function RowContent({ popular, trending, trailer }) {
                     />
                   )
                 ) : (
-                  <Card data={cardItem} />
+                  <Card
+                    data={cardItem}
+                    type={activeType === type[0] ? linkType[0] : linkType[1]}
+                  />
                 )}
               </div>
             )

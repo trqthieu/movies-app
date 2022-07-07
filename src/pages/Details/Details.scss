@@ -1,0 +1,224 @@
+.details_header {
+  display: flex;
+  justify-content: center;
+}
+.details_header .header_nav_item .link {
+  color: var(--darkBlue);
+  font-weight: 400;
+}
+.details_banner_wrapper {
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+.details_banner_overlay {
+  background-image: linear-gradient(
+    to right,
+    rgba(31.5, 31.5, 31.5, 1) 150px,
+    rgba(31.5, 31.5, 31.5, 0.84) 100%
+  );
+  color: #fff;
+  padding: 30px 0px;
+  .score {
+    position: relative;
+  }
+}
+.details_banner {
+  display: flex;
+}
+.details_banner_img {
+  min-width: 300px;
+  width: 300px;
+  //   height: 450px;
+  img {
+    border-radius: 8px;
+    width: 100%;
+  }
+}
+.details_banner_desc {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding-left: 40px;
+}
+.desc_title * {
+  font-size: 3.5rem;
+  display: inline-block;
+}
+.desc_title {
+  .name {
+    font-weight: 700;
+  }
+  .year {
+    opacity: 0.8;
+  }
+}
+.desc_genres {
+  display: flex;
+  margin-bottom: 20px;
+  .certification {
+    border: 1px solid rgba(255, 255, 255, 0.6);
+    color: rgba(255, 255, 255, 0.6);
+    border-radius: 2px;
+    margin-right: 7px;
+    padding: 0px 4px;
+  }
+  .time {
+    position: relative;
+    padding-left: 20px;
+    &::before {
+      font-size: 1.1em;
+      line-height: 1;
+      content: '\2022';
+      width: 100%;
+      height: 100%;
+      position: absolute;
+      top: 0;
+      left: 7px;
+      display: inline-flex;
+      align-content: center;
+      align-items: center;
+    }
+  }
+}
+.tippy-box[data-theme~='darkBlue'] {
+  background-color: var(--darkBlue);
+  color: #fff;
+}
+.tippy-box[data-theme~='darkBlue'][data-placement^='bottom']
+  > .tippy-arrow::before {
+  border-bottom-color: var(--darkBlue);
+}
+.desc_actions {
+  display: flex;
+  margin-bottom: 20px;
+  .score {
+    display: flex;
+    align-items: center;
+    .card_rate_wrapper {
+      width: 60px;
+      height: 60px;
+      position: initial;
+      transform: translate(0);
+    }
+    .card_rate_text {
+      font-size: 2rem;
+    }
+    .text {
+      font-weight: 700;
+      margin-left: 6px;
+    }
+  }
+  .interact {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    .interact_item {
+      cursor: pointer;
+      margin-left: 20px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background-color: var(--darkBlue);
+      border-radius: 50%;
+      width: 46px;
+      height: 46px;
+      font-size: 1.4rem;
+      .text {
+        white-space: nowrap;
+      }
+      &:last-child {
+        background-color: transparent;
+        justify-content: flex-start;
+        .text {
+          margin-left: 10px;
+          font-weight: 600;
+        }
+        &:hover {
+          opacity: 0.8;
+        }
+      }
+    }
+  }
+}
+.tagline {
+  opacity: 0.7;
+  font-size: 1.76rem;
+  font-style: italic;
+}
+.overview {
+  h1 {
+    font-size: 2rem;
+    line-height: 2.6rem;
+    margin: 10px 0;
+    font-weight: 600;
+  }
+}
+.character {
+  margin-top: 20px;
+  h3 {
+    font-weight: 600;
+  }
+  span {
+    font-size: 1.44rem;
+  }
+}
+.content_wrapper {
+  padding: 30px 0;
+}
+.content_left {
+}
+.content_item {
+  border-bottom: 1px solid #d7d7d7;
+  padding-bottom: 30px;
+  .title {
+    font-weight: 600;
+    font-size: 2.2rem;
+    margin-bottom: 20px;
+  }
+  .all {
+    text-decoration: none;
+    color: var(--darkBlue);
+    font-size: 1.8rem;
+    font-weight: 600;
+    margin-top: 20px;
+    display: inline-block;
+    &:hover {
+      color: var(--lightGreen);
+    }
+  }
+}
+.cast_title {
+}
+.cast_list {
+  display: flex;
+  overflow: scroll;
+  padding-bottom: 20px;
+}
+.cast_item {
+  min-width: 140px;
+  margin-right: 15px;
+  border-radius: 8px;
+  border: 1px solid var(--lightGrey);
+  overflow: hidden;
+  padding-bottom: 10px;
+  .cast {
+    &_name {
+      padding: 10px 10px 0 10px;
+      font-weight: 700;
+      font-size: 1.6rem;
+    }
+    &_character {
+      line-height: 1.8rem;
+      font-size: 1.5rem;
+      padding: 0 10px;
+    }
+    &_count_episodes {
+      color: rgba(0, 0, 0, 0.5);
+      padding: 0 10px;
+      font-size: 1.5rem;
+    }
+    .all {
+    }
+  }
+}

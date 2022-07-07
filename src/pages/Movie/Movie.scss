@@ -17,6 +17,17 @@
       box-shadow: 0 2px 8px rgb(0 0 0 / 10%);
       width: 100%;
       height: 100%;
+      //   justify-content: space-between;
+      .card_img_wrapper {
+        background-color: #dbdbdb;
+        border-top-left-radius: 8px;
+        border-top-right-radius: 8px;
+        // height: 100%;
+      }
+      .card_img,
+      img {
+        height: 100%;
+      }
     }
   }
 }

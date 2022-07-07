@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import request from 'src/api/request'
 import './LanguageSelect.scss'
-function LanguageSelect() {
+function LanguageSelect({ selectedLanguage, handleLanguage }) {
   const [languages, setLanguages] = useState([])
   useEffect(() => {
     const getLanguages = async () => {
@@ -23,7 +23,12 @@ function LanguageSelect() {
   }, [])
   return (
     <div className='language_select'>
-      <select name='language_filter' id='language_filter'>
+      <select
+        value={selectedLanguage}
+        onChange={e => handleLanguage(e.target.value)}
+        name='language_filter'
+        id='language_filter'
+      >
         <option value='none'>None Selected</option>
         {languages.map(language => {
           return (

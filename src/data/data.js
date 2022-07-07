@@ -90,3 +90,43 @@ export const popupAdd = {
     ],
   ],
 }
+const overviewNav = {
+  nav: { text: 'Overview' },
+  subnav: [
+    { text: 'Main', link: '/' },
+    { text: 'Alternative Titles', link: '/' },
+    { text: 'Cast & Crew', link: '/' },
+    { text: 'Episode Groups', link: '/' },
+    { text: 'Seasons', link: '/' },
+    { text: 'Translations', link: '/' },
+    { text: 'Changes', link: '/' },
+    { text: 'Report', link: '/' },
+    { text: 'Edit', link: '/' },
+  ],
+}
+
+const mediaNav = {
+  nav: { text: 'Media' },
+  subnav: [
+    { text: 'Backdrops', link: '/' },
+    { text: 'Logos', link: '/' },
+    { text: 'Posters', link: '/' },
+    { text: 'Videos', link: '/' },
+  ],
+}
+const fandomNav = {
+  nav: { text: 'People' },
+  subnav: [
+    { text: 'Discussions', link: '/' },
+    { text: 'Reviews', link: '/' },
+  ],
+}
+const shareNav = {
+  nav: { text: 'More' },
+  subnav: [
+    { text: 'Share Link', link: '/' },
+    { text: 'Facebook', link: '/' },
+    { text: 'Tweet', link: '/' },
+  ],
+}
+export const detailsNavList = [overviewNav, mediaNav, fandomNav, shareNav]

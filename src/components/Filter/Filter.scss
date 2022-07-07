@@ -87,6 +87,10 @@ input.parent_checkbox:checked ~ .sub_checkbox {
     color: #fff;
     background-color: var(--lightBlue);
   }
+  &.active {
+    color: #fff;
+    background-color: var(--lightBlue);
+  }
 }
 .select_item {
   display: flex;
@@ -95,13 +99,7 @@ input.parent_checkbox:checked ~ .sub_checkbox {
     line-height: 1.6rem;
   }
 }
-.keywords_input {
-  width: 100%;
-  outline-color: var(--lightBlue);
-  padding: 6px 12px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-}
+
 .button {
   background-color: var(--lightBlue);
   margin-top: 10px;

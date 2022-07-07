@@ -1,11 +1,19 @@
 import mainAxiosClient, { imageAxiosClient } from './axios'
 
 const API_KEY = '62952951c7d597d5ecd719dd07582bee'
+export const IMAGE_PATH = 'https://image.tmdb.org/t/p/original'
 const requestPaths = {
   multiSearchQuery: `/search/multi?api_key=${API_KEY}`,
-  moviesSearchQuery: `/search/movie?api_key=${API_KEY}`,
+  keywordSearchQuery: `/search/keyword?api_key=${API_KEY}`,
+  movieSearchQuery: `/search/movie?api_key=${API_KEY}`,
   languagesQuery: `/configuration/languages?api_key=${API_KEY}`,
   countriesQuery: `/configuration/countries?api_key=${API_KEY}`,
+  genresQuery: `/genre/movie/list?api_key=${API_KEY}`,
+  moviesPlaying: `/movie/now_playing?api_key=${API_KEY}`,
+  moviesUpcoming: `/movie/upcoming?api_key=${API_KEY}`,
+  tvAiringToday: `/tv/airing_today?api_key=${API_KEY}`,
+  tvOnTheAir: `/tv/on_the_air?api_key=${API_KEY}`,
+  popularPeople: `/person/popular?api_key=${API_KEY}`,
 }
 const request = {
   getImage: async path => {
@@ -21,6 +29,15 @@ const request = {
     })
     return result.data.results
   },
+  getSearchKeywords: async value => {
+    const params = {
+      query: value,
+    }
+    const result = await mainAxiosClient.get(requestPaths.keywordSearchQuery, {
+      params,
+    })
+    return result.data.results
+  },
   getCountryResults: async () => {
     const result = await mainAxiosClient.get(requestPaths.countriesQuery)
     return result.data
@@ -30,7 +47,7 @@ const request = {
       query: name,
       page,
     }
-    const result = await mainAxiosClient.get(requestPaths.moviesSearchQuery, {
+    const result = await mainAxiosClient.get(requestPaths.movieSearchQuery, {
       params,
     })
     return result.data
@@ -49,6 +66,44 @@ const request = {
     )
     return result.data.results
   },
+  getMoviesPlaying: async (page = 1) => {
+    const params = { page }
+    const result = await mainAxiosClient.get(requestPaths.moviesPlaying, {
+      params,
+    })
+    return result.data.results
+  },
+  getMoviesUpcoming: async (page = 1) => {
+    const params = { page }
+    const result = await mainAxiosClient.get(requestPaths.moviesUpcoming, {
+      params,
+    })
+    return result.data.results
+  },
+  getTopRated: async (type, page = 1) => {
+    const params = { page }
+    const result = await mainAxiosClient.get(
+      `/${type}/top_rated?api_key=${API_KEY}`,
+      {
+        params,
+      }
+    )
+    return result.data.results
+  },
+  getTVAiringToday: async (page = 1) => {
+    const params = { page }
+    const result = await mainAxiosClient.get(requestPaths.tvAiringToday, {
+      params,
+    })
+    return result.data.results
+  },
+  getTVOnTheAir: async (page = 1) => {
+    const params = { page }
+    const result = await mainAxiosClient.get(requestPaths.tvOnTheAir, {
+      params,
+    })
+    return result.data.results
+  },
   getTrending: async type => {
     const result = await mainAxiosClient.get(
       `/trending/all/${type}?api_key=${API_KEY}`
@@ -61,6 +116,7 @@ const request = {
     )
     return result.data.results
   },
+
   getDetails: async (type, id) => {
     const result = await mainAxiosClient.get(
       `/${type}/${id}?api_key=${API_KEY}`
@@ -71,6 +127,37 @@ const request = {
     const result = await mainAxiosClient.get(
       `/${type}/${id}/videos?api_key=${API_KEY}`
     )
+    return result.data
+  },
+  getDiscover: async (type, params) => {
+    const result = await mainAxiosClient.get(
+      `/discover/${type}?api_key=${API_KEY}`,
+      { params }
+    )
+    return result.data
+  },
+
+  getGenres: async () => {
+    const result = await mainAxiosClient.get(requestPaths.genresQuery)
+    return result.data
+  },
+  getProviders: async (type, region) => {
+    const params = {
+      watch_region: region,
+    }
+    const result = await mainAxiosClient.get(
+      `/watch/providers/${type}?api_key=${API_KEY}`,
+      {
+        params,
+      }
+    )
+    return result.data.results
+  },
+  getPopularPeople: async (page = 1) => {
+    const params = { page }
+    const result = await mainAxiosClient.get(requestPaths.popularPeople, {
+      params,
+    })
     return result.data
   },
 }
