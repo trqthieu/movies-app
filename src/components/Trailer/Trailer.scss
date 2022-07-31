@@ -16,20 +16,20 @@
       font-size: 3rem;
     }
     &:hover {
-      transform: scale(1.1);
       & .btn_play_trailer {
-        transform: scale(120%) translate(-50%, -50%);
+        transform: scale(1.2) translate(-50%, -50%);
       }
     }
   }
 }
 .row_content.row_trailer {
   color: #fff;
-  transition: all 0.5s;
+  transition: all 1s;
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
 }
+
 .trailer_desc {
   padding-top: 20px;
   text-align: center;
@@ -48,6 +48,7 @@
   border-radius: 30px;
 }
 .video_popup {
+  max-height: 100%;
   background-color: #000;
   position: fixed;
   z-index: 999;

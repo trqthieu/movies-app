@@ -5,18 +5,16 @@ import {
   faList,
   faPlay,
   faStar,
-  faXmark,
 } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import React, { useState } from 'react'
+import { useState } from 'react'
+import { LazyLoadImage } from 'react-lazy-load-image-component'
 import request from 'src/api/request'
-import images from 'src/assets/images/images'
 import TrailerPopup from '../TrailerPopup/TrailerPopup'
 import './Trailer.scss'
 function Trailer({ type, data, handleBackground }) {
   const [videoPath, setVideoPath] = useState()
   const [showVideo, setShowVideo] = useState(false)
-  const [loadedImage, setLoadedImage] = useState(false)
   const handleTrailerClick = async () => {
     const result = await request.getVideos(type, data.id)
     setShowVideo(true)
@@ -40,13 +38,9 @@ function Trailer({ type, data, handleBackground }) {
           <div className='btn_play_trailer'>
             <FontAwesomeIcon icon={faPlay} />
           </div>
-          <img
-            onLoad={() => setLoadedImage(true)}
-            src={
-              loadedImage
-                ? `https://image.tmdb.org/t/p/original${data.backdrop_path}`
-                : images.loadingImage
-            }
+          <LazyLoadImage
+            effect='opacity'
+            src={`https://image.tmdb.org/t/p/original${data.backdrop_path}`}
             alt=''
           />
         </div>

@@ -160,6 +160,7 @@ function Filter({
     handlePage(1)
     handleFiltering(true)
     handleMovieList([])
+    window.scrollTo(0, 0)
   }
 
   const handleReleaseDate = (position, value) => {

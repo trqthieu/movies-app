@@ -4,8 +4,10 @@
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+
   .person_card_img {
     height: 100%;
+    display: flex;
   }
   img {
     width: 100%;
@@ -31,4 +33,7 @@
 .person_card_knownfor {
   font-size: 1.5rem;
   color: rgba(0, 0, 0, 0.6);
+}
+.lazy-load-image-background.opacity.lazy-load-image-loaded {
+  width: 100%;
 }

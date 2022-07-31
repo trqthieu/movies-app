@@ -7,9 +7,10 @@
 }
 .card_img_wrapper {
   position: relative;
+  box-shadow: 0 2px 8px rgb(0 0 0 / 10%);
+  border-radius: 8px;
   img {
-    border-top-left-radius: 8px;
-    border-top-right-radius: 8px;
+    border-radius: 8px;
     width: 100%;
   }
 }

@@ -14,27 +14,8 @@ import './Card.scss'
 import { LazyLoadImage } from 'react-lazy-load-image-component'
 import 'react-lazy-load-image-component/src/effects/opacity.css'
 import request, { IMAGE_PATH } from 'src/api/request'
+import formatDate from 'src/common/formatDate'
 
-const formatDate = date => {
-  const monthNames = [
-    'Jan',
-    'Feb',
-    'Mar',
-    'Apr',
-    'May',
-    'Jun',
-    'Jul',
-    'Aug',
-    'Sep',
-    'Oct',
-    'Nov',
-    'Dec',
-  ]
-  const formattedDate = date.split('-')
-  return `${monthNames[formattedDate[1] - 1]} ${formattedDate[2]}, ${
-    formattedDate[0]
-  }`
-}
 function Card({ data, type }) {
   return (
     <div className='card'>
@@ -77,7 +58,9 @@ function Card({ data, type }) {
         <div className='card_rate_wrapper'>
           <div className='card_rate'>
             <span className='card_rate_text'>
-              {(data.vote_average * 10).toFixed()}%
+              {(data.vote_average * 10).toFixed() > 0
+                ? `${(data.vote_average * 10).toFixed()} %`
+                : 'NR'}
             </span>
             <CircularProgress
               className='progress_bar'

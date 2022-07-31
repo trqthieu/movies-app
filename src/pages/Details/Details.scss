@@ -1,6 +1,7 @@
 .details_header {
   display: flex;
   justify-content: center;
+  border-bottom: 1px solid var(--lightGrey);
 }
 .details_header .header_nav_item .link {
   color: var(--darkBlue);
@@ -15,7 +16,7 @@
   background-image: linear-gradient(
     to right,
     rgba(31.5, 31.5, 31.5, 1) 150px,
-    rgba(31.5, 31.5, 31.5, 0.84) 100%
+    rgba(31.5, 31.5, 31.5, 0.6) 100%
   );
   color: #fff;
   padding: 30px 0px;
@@ -127,7 +128,7 @@
       .text {
         white-space: nowrap;
       }
-      &:last-child {
+      &.play_trailer {
         background-color: transparent;
         justify-content: flex-start;
         .text {
@@ -168,9 +169,15 @@
 }
 .content_left {
 }
-.content_item {
+.section {
   border-bottom: 1px solid #d7d7d7;
-  padding-bottom: 30px;
+  padding: 30px 0;
+  &:first-child {
+    padding-top: 0px;
+  }
+  &:last-child {
+    border: none;
+  }
   .title {
     font-weight: 600;
     font-size: 2.2rem;
@@ -184,10 +191,11 @@
     margin-top: 20px;
     display: inline-block;
     &:hover {
-      color: var(--lightGreen);
+      color: rgba(0, 0, 0, 0.5);
     }
   }
 }
+// CAST
 .cast_title {
 }
 .cast_list {
@@ -202,23 +210,310 @@
   border: 1px solid var(--lightGrey);
   overflow: hidden;
   padding-bottom: 10px;
-  .cast {
-    &_name {
-      padding: 10px 10px 0 10px;
-      font-weight: 700;
+}
+.cast_img {
+  height: 206px;
+  width: 138px;
+  display: flex;
+  align-items: center;
+  background-color: var(--lightGrey);
+  img {
+    width: 100%;
+  }
+}
+.cast {
+  &_name {
+    padding: 10px 10px 0 10px;
+    font-weight: 700;
+    font-size: 1.6rem;
+  }
+  &_character {
+    line-height: 1.8rem;
+    font-size: 1.5rem;
+    padding: 0 10px;
+  }
+  &_count_episodes {
+    color: rgba(0, 0, 0, 0.5);
+    padding: 0 10px;
+    font-size: 1.5rem;
+  }
+  .all {
+  }
+}
+.cast_name {
+  a {
+    display: block;
+    color: #000;
+    text-decoration: none;
+    &:hover {
+      color: rgba(0, 0, 0, 0.5);
+    }
+  }
+}
+.lazy-load-image-background.opacity.lazy-load-image-loaded {
+  img {
+    width: 100%;
+  }
+}
+//Season
+.season {
+}
+.season_item {
+  width: 100%;
+  display: flex;
+  border-radius: 8px;
+  overflow: hidden;
+  border: 1px solid var(--lightGrey);
+}
+.season_img {
+  min-width: 130px;
+  width: 130px;
+}
+.season_right {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  h2,
+  h4 {
+    font-weight: 600;
+  }
+  a:hover {
+    color: rgba(0, 0, 0, 0.5);
+  }
+  p {
+    padding-top: 20px;
+  }
+}
+//SOCIAL
+.section_header {
+  display: flex;
+  .title {
+    margin-right: 50px;
+  }
+}
+.section_tabs {
+  span {
+    font-size: 1.8rem;
+    font-weight: 600;
+    margin-right: 24px;
+    padding-bottom: 5px;
+    cursor: pointer;
+    display: inline-block;
+    &.active {
+      border-bottom: 4px solid #000;
+    }
+  }
+}
+.review_item {
+  border-radius: 8px;
+  border: 1px solid var(--lightGrey);
+  padding: 20px;
+  display: flex;
+}
+.review_img {
+  margin-right: 20px;
+  img {
+    border-radius: 50%;
+    width: 64px;
+    height: 64px;
+  }
+}
+.review_title {
+  display: flex;
+  h3 {
+    margin-right: 8px;
+    font-size: 2rem;
+    font-weight: 700;
+  }
+  .review_rate {
+    border-radius: 8px;
+    color: #fff;
+    padding: 1px 8px;
+    background-color: #000;
+    font-size: 1.4rem;
+    span {
+      margin-left: 6px;
+    }
+  }
+}
+.review_date a {
+  font-weight: 600;
+}
+.review_content {
+  padding-top: 20px;
+  a {
+    text-decoration: underline;
+  }
+}
+.discussion_item {
+  display: flex;
+  justify-content: space-between;
+  border-radius: 8px;
+  border: 1px solid var(--lightGrey);
+  padding: 12px 20px;
+  margin-bottom: 10px;
+}
+.discussion_img {
+  margin-right: 10px;
+  img {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+  }
+}
+.discussion_topic {
+  flex-basis: 40%;
+}
+.discussion_date {
+  flex-basis: 30%;
+  text-align: right;
+  a {
+    font-weight: 600;
+  }
+}
+//MEDIA
+.media .media_list {
+  height: 300px;
+  display: flex;
+  overflow-x: scroll;
+  border-radius: 8px;
+  .lazy-load-image-background.opacity.lazy-load-image-loaded {
+    img {
+      height: 100%;
+      width: auto;
+    }
+  }
+  .youtube_frame {
+    height: 100%;
+    width: auto;
+  }
+}
+.video_thumbnail {
+  flex: 0 0 500px;
+  height: 100%;
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  position: relative;
+  .play_video {
+    transition: all ease 0.25s;
+    color: #fff;
+    width: 68px;
+    height: 68px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background-color: rgba(0, 0, 0, 0.7);
+    font-size: 2.5rem;
+    position: absolute;
+    cursor: pointer;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    &:hover {
+      color: #a5a29e;
+    }
+  }
+}
+.recommendation_list {
+  display: flex;
+  overflow: scroll;
+  padding-bottom: 20px;
+  .item {
+    flex: 0 0 250px;
+    margin-right: 15px;
+    .item_img {
+      position: relative;
+      background-color: #d7d7d7;
+      border-radius: 8px;
+      overflow: hidden;
+      &:hover .item_info {
+        visibility: visible;
+      }
+      img {
+        width: 100%;
+        height: 141px;
+      }
+    }
+    .item_desc {
+      display: flex;
+      justify-content: space-between;
+    }
+  }
+}
+.item_info {
+  visibility: hidden;
+  font-size: 1.4rem;
+  position: absolute;
+  width: 100%;
+  left: 0;
+  bottom: 0;
+  padding: 10px;
+  background-color: rgba(255, 255, 255, 0.9);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  .info_left > * {
+    margin-right: 10px;
+    span {
       font-size: 1.6rem;
     }
-    &_character {
-      line-height: 1.8rem;
-      font-size: 1.5rem;
-      padding: 0 10px;
+  }
+  .info_right > * {
+    margin-left: 10px;
+  }
+  .info_left span {
+    font-size: 1.6rem;
+  }
+}
+.content_right {
+  ul {
+    padding: 5px 0;
+  }
+  li {
+    display: inline-block;
+    margin: 0 4px 4px 0;
+    a {
+      display: block;
+      padding: 4px 10px;
+      border-radius: 4px;
+      background-color: rgba(0, 0, 0, 0.1);
+      border: 1px solid #d7d7d7;
+      font-size: 1.3rem;
     }
-    &_count_episodes {
-      color: rgba(0, 0, 0, 0.5);
-      padding: 0 10px;
-      font-size: 1.5rem;
-    }
-    .all {
+  }
+}
+.panel {
+  margin-bottom: 20px;
+  &:last-child {
+    margin-bottom: 0;
+  }
+  img {
+    height: 30px;
+  }
+  strong {
+    display: block;
+  }
+}
+.score_bar {
+  padding: 6px 10px;
+  background-color: var(--lightBlue);
+  border-radius: 8px;
+  p {
+    font-weight: 600;
+  }
+}
+.contributor {
+  display: flex;
+  img {
+    border-radius: 50%;
+  }
+  &_info {
+    padding-left: 10px;
+    p {
+      font-weight: 600;
     }
   }
 }

@@ -47,7 +47,7 @@ function Home() {
         <RowContent popular />
         <RowContent trailer />
         <RowContent trending />
-        <div className='leaderboard'>
+        {/* <div className='leaderboard'>
           <Container>
             <div className='leaderboard_heading'>
               <span className='leaderboard_title'>Leaderboard</span>
@@ -97,7 +97,7 @@ function Home() {
               </Grid>
             </div>
           </Container>
-        </div>
+        </div> */}
       </div>
     </div>
   )

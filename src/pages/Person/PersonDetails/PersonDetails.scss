@@ -1,0 +1,162 @@
+.persons_content {
+  padding: 30px 0;
+  .person_img {
+    max-width: 300px;
+    border-radius: 8px;
+    overflow: hidden;
+    img {
+      width: 100%;
+    }
+  }
+}
+.person_info {
+  margin-top: 30px;
+  h3 {
+    font-weight: 700;
+    margin-bottom: 20px;
+  }
+}
+.person_social {
+  display: flex;
+  margin-bottom: 30px;
+  img {
+    width: 30px;
+    margin-right: 10px;
+  }
+}
+.person_name {
+  font-weight: 700;
+  font-size: 3.5rem;
+}
+.biography {
+  //   height: 220px;
+  //   overflow: hidden;
+}
+.read_more {
+  text-align: right;
+  span {
+    cursor: pointer;
+    color: var(--lightBlue);
+    font-weight: 600;
+  }
+}
+.person_panel {
+  margin-top: 30px;
+  strong {
+    font-size: 2rem;
+    margin-bottom: 8px;
+    display: block;
+  }
+  .card_list {
+    display: flex;
+    overflow: scroll;
+    padding-bottom: 40px;
+  }
+  .card_item {
+    width: 130px;
+    height: 195px;
+    flex: 0 0 130px;
+    img {
+      width: 100%;
+      border-radius: 8px;
+      box-shadow: 0 2px 8px rgb(0 0 0 / 10%);
+    }
+    p {
+      font-size: 1.4rem;
+      text-align: center;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    &.mr-10 {
+      margin-right: 10px;
+    }
+  }
+}
+.panel_header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  .details_header {
+    border: none;
+  }
+}
+.filter {
+  display: flex;
+  .filter_item {
+    margin-left: 20px;
+    position: relative;
+    cursor: pointer;
+    & > p {
+      padding: 8px;
+      &:hover {
+        color: rgba(33, 37, 41, 0.9);
+      }
+    }
+    .filter_child {
+      background-color: #fff;
+      padding: 10px 0;
+      position: absolute;
+      left: -50%;
+      display: none;
+      border-radius: 4px;
+      border: 1px solid rgba(0, 0, 0, 0.15);
+      p {
+        padding: 3px 28px;
+        white-space: nowrap;
+        &:hover {
+          background-color: #f8f9fa;
+        }
+      }
+    }
+  }
+  .filter_item:hover .filter_child {
+    display: block;
+  }
+}
+.panel_body {
+  border: 1px solid var(--lightGrey);
+}
+.panel_group {
+  padding: 10px 0;
+  border-bottom: 1px solid var(--lightGrey);
+  &:last-child {
+    border-bottom: none;
+  }
+}
+.panel_item {
+  padding: 4px 0;
+  display: flex;
+  align-items: center;
+
+  .movie_year {
+    width: 40px;
+    padding: 2px 8px 2px 16px;
+  }
+  .movie_more {
+    position: relative;
+    cursor: pointer;
+    margin: 10px 20px;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    border: 2px solid #000;
+    &.active {
+      background-color: #000;
+    }
+    &:hover {
+      background-color: #000;
+    }
+  }
+  .movie_name {
+    strong {
+      font-size: 1.6rem;
+      margin: 0;
+      &:hover {
+        color: var(--lightBlue);
+      }
+    }
+    display: flex;
+    align-items: center;
+  }
+}

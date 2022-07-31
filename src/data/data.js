@@ -90,7 +90,7 @@ export const popupAdd = {
     ],
   ],
 }
-const overviewNav = {
+const overviewDetails = {
   nav: { text: 'Overview' },
   subnav: [
     { text: 'Main', link: '/' },
@@ -105,7 +105,7 @@ const overviewNav = {
   ],
 }
 
-const mediaNav = {
+const mediaDetails = {
   nav: { text: 'Media' },
   subnav: [
     { text: 'Backdrops', link: '/' },
@@ -114,19 +114,57 @@ const mediaNav = {
     { text: 'Videos', link: '/' },
   ],
 }
-const fandomNav = {
-  nav: { text: 'People' },
+const fandomDetails = {
+  nav: { text: 'Fandom' },
   subnav: [
     { text: 'Discussions', link: '/' },
     { text: 'Reviews', link: '/' },
   ],
 }
-const shareNav = {
-  nav: { text: 'More' },
+const shareDetails = {
+  nav: { text: 'Share' },
   subnav: [
     { text: 'Share Link', link: '/' },
     { text: 'Facebook', link: '/' },
     { text: 'Tweet', link: '/' },
   ],
 }
-export const detailsNavList = [overviewNav, mediaNav, fandomNav, shareNav]
+const overviewPerson = {
+  nav: { text: 'Overview' },
+  subnav: [
+    { text: 'Main', link: '/' },
+    { text: 'Translations', link: '/' },
+    { text: 'Changes', link: '/' },
+    { text: 'Report', link: '/' },
+    { text: 'Edit', link: '/' },
+  ],
+}
+const mediaPerson = {
+  nav: { text: 'Media' },
+  subnav: [{ text: 'Profiles', link: '/' }],
+}
+const fandomPerson = {
+  nav: { text: 'Fandom' },
+  subnav: [{ text: 'Discussions', link: '/' }],
+}
+const sharePerson = {
+  nav: { text: 'Share' },
+  subnav: [
+    { text: 'Share Link', link: '/' },
+    { text: 'Facebook', link: '/' },
+    { text: 'Tweet', link: '/' },
+  ],
+}
+
+export const detailsNavList = [
+  overviewDetails,
+  mediaDetails,
+  fandomDetails,
+  shareDetails,
+]
+export const personNavList = [
+  overviewPerson,
+  mediaPerson,
+  fandomPerson,
+  sharePerson,
+]

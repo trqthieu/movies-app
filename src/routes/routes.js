@@ -11,12 +11,14 @@ import TVTopRated from 'src/pages/Tv/TopRated/TopRated'
 import AiringToday from 'src/pages/Tv/AiringToday/AiringToday'
 import OnTV from 'src/pages/Tv/OnTV/OnTV'
 import Details from 'src/pages/Details/Details'
+import PopularPerson from 'src/pages/Person/PopularPerson/PopularPerson'
+import PersonDetails from 'src/pages/Person/PersonDetails/PersonDetails'
 
 export const routesConfig = {
   home: '/',
   movie: '/movie/*',
   tv: '/tv/*',
-  person: '/person',
+  person: '/person/*',
 }
 const routesPath = [
   {
@@ -92,6 +94,20 @@ export const tvRoutes = [
   {
     path: tvPaths.details,
     element: <Details />,
+  },
+]
+export const personPaths = {
+  popular: '/',
+  details: '/:id',
+}
+export const personRoutes = [
+  {
+    path: personPaths.popular,
+    element: <PopularPerson />,
+  },
+  {
+    path: personPaths.details,
+    element: <PersonDetails />,
   },
 ]
 export default routesPath

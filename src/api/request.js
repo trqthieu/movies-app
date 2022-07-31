@@ -141,6 +141,48 @@ const request = {
     const result = await mainAxiosClient.get(requestPaths.genresQuery)
     return result.data
   },
+  getCredits: async (type, id) => {
+    const result = await mainAxiosClient.get(
+      `/${type}/${id}/credits?api_key=${API_KEY}&append_to_response=credits`
+    )
+    return result.data
+  },
+  getCreditDetails: async creditId => {
+    const result = await mainAxiosClient.get(
+      `/credit/${creditId}?api_key=${API_KEY}`
+    )
+    return result.data
+  },
+  getReviews: async (type, id) => {
+    const result = await mainAxiosClient.get(
+      `/${type}/${id}/reviews?api_key=${API_KEY}`
+    )
+    return result.data
+  },
+  getImages: async (type, id) => {
+    const result = await mainAxiosClient.get(
+      `/${type}/${id}/images?api_key=${API_KEY}`
+    )
+    return result.data
+  },
+  getRecommendations: async (type, id) => {
+    const result = await mainAxiosClient.get(
+      `/${type}/${id}/recommendations?api_key=${API_KEY}`
+    )
+    return result.data
+  },
+  getKeywords: async (type, id) => {
+    const result = await mainAxiosClient.get(
+      `/${type}/${id}/keywords?api_key=${API_KEY}`
+    )
+    return result.data.results || result.data.keywords
+  },
+  getExternalIDs: async (type, id) => {
+    const result = await mainAxiosClient.get(
+      `/${type}/${id}/external_ids?api_key=${API_KEY}`
+    )
+    return result.data
+  },
   getProviders: async (type, region) => {
     const params = {
       watch_region: region,
@@ -158,6 +200,28 @@ const request = {
     const result = await mainAxiosClient.get(requestPaths.popularPeople, {
       params,
     })
+    return result.data
+  },
+  getPersonDetails: async id => {
+    const result = await mainAxiosClient.get(`/person/${id}?api_key=${API_KEY}`)
+    return result.data
+  },
+  getPersonCredits: async id => {
+    const result = await mainAxiosClient.get(
+      `/person/${id}/combined_credits?api_key=${API_KEY}`
+    )
+    return result.data
+  },
+  getMovieCredits: async id => {
+    const result = await mainAxiosClient.get(
+      `/person/${id}/movie_credits?api_key=${API_KEY}`
+    )
+    return result.data
+  },
+  getTVCredits: async id => {
+    const result = await mainAxiosClient.get(
+      `/person/${id}/tv_credits?api_key=${API_KEY}`
+    )
     return result.data
   },
 }
