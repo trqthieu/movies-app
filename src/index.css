@@ -1,5 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@400;600;700&display=swap');
 :root {
+  --primaryColor: rgba(31.5, 10.5, 10.5, 1);
   --lightGreen: #87cca5;
   --darkBlue: #032541;
   --lightBlue: #03b4e4;
@@ -29,7 +30,6 @@ li {
 a,
 a * {
   text-decoration: none;
-  color: #000;
 }
 html {
   font-size: 62.5%;

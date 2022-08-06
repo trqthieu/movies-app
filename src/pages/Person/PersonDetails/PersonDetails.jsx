@@ -9,10 +9,12 @@ import { LazyLoadImage } from 'react-lazy-load-image-component'
 import { Link, useParams } from 'react-router-dom'
 import request, { IMAGE_PATH } from 'src/api/request'
 import icons from 'src/assets/icons/icons.js'
+import images from 'src/assets/images/images'
 import calculateAge from 'src/common/calculateAge'
 import formatCounter from 'src/common/formatCouter'
 import { getYear } from 'src/common/formatDate'
 import formatText from 'src/common/formatText'
+import getImagePath from 'src/common/getImagePath'
 import MovieCard from 'src/components/Card/MovieCard/MovieCard'
 import NavItem from 'src/components/NavItem/NavItem'
 import { personNavList } from 'src/data/data'
@@ -20,10 +22,14 @@ import './PersonDetails.scss'
 function PersonDetails() {
   const { id } = useParams()
   const [details, setDetails] = useState()
-  console.log(details)
   const [acting, setActing] = useState([])
   const [production, setProduction] = useState([])
   const [writing, setWriting] = useState([])
+  const [creator, setCreator] = useState([])
+  const [crew, setCrew] = useState([])
+  const [directing, setDirecting] = useState([])
+  const [knownFor, setKnownFor] = useState([])
+
   const [bio, setBio] = useState()
   const [readMoreVisible, setReadMoreVisible] = useState(false)
   const bioRef = useRef()
@@ -74,16 +80,31 @@ function PersonDetails() {
       }
 
       const credits = await request.getPersonCredits(id)
-      console.log(credits)
-      const movies = credits.cast
-      movies.sort((a, b) => {
-        return b.popularity - a.popularity
+      const knownMovies = []
+      for (const index in credits) {
+        if (index !== 'id') {
+          knownMovies.push(...credits[index])
+        }
+      }
+      knownMovies.sort((a, b) => b.popularity - a.popularity)
+      const displayKnownMovies = []
+      knownMovies.forEach(movie => {
+        const found = displayKnownMovies.find(
+          display => display.id === movie.id
+        )
+        if (!found) {
+          displayKnownMovies.push(movie)
+        }
       })
-      setActing(movies)
+      setKnownFor(displayKnownMovies)
+      setActing(credits.cast)
       setProduction(
         credits.crew.filter(item => item.department === 'Production')
       )
       setWriting(credits.crew.filter(item => item.department === 'Writing'))
+      setCreator(credits.crew.filter(item => item.department === 'Creator'))
+      setDirecting(credits.crew.filter(item => item.department === 'Directing'))
+      setCrew(credits.crew.filter(item => item.department === 'Crew'))
     }
 
     getDetails()
@@ -103,7 +124,13 @@ function PersonDetails() {
                 <div className='content_left'>
                   <div className='person_img'>
                     <LazyLoadImage
-                      src={`${IMAGE_PATH}${details.profile_path}`}
+                      src={
+                        details.profile_path
+                          ? getImagePath(details.profile_path)
+                          : details.gender === 1
+                          ? images.femalePerson
+                          : images.malePerson
+                      }
                       alt=''
                     />
                   </div>
@@ -188,219 +215,438 @@ function PersonDetails() {
                 <div className='person_panel'>
                   <strong>Known For</strong>
                   <div className='card_list'>
-                    {acting.splice(0, 8).map(movie => (
+                    {knownFor.splice(0, 8).map(movie => (
                       <div key={movie.id} className='card_item mr-10'>
                         <Link to={`/${movie.media_type}/${movie.id}`}>
-                          <img
-                            src={`${IMAGE_PATH}${movie.poster_path}`}
-                            alt=''
-                          />
+                          <div className='card_item_img'>
+                            <img
+                              src={
+                                movie.poster_path
+                                  ? `${IMAGE_PATH}${movie.poster_path}`
+                                  : images.loadingImage
+                              }
+                              alt=''
+                            />
+                          </div>
                           <p>{movie.original_title || movie.original_name}</p>
                         </Link>
                       </div>
                     ))}
                   </div>
                 </div>
-                <div className='person_panel'>
-                  <div className='panel_header'>
-                    <strong>Acting</strong>
-                    <div className='filter'>
-                      <div className='filter_item'>
-                        <p>All</p>
-                        <div className='filter_child'>
-                          <p>Movies</p>
-                          <p>TV Shows</p>
-                        </div>
+
+                <div className='credit_list'>
+                  <div className='filter'>
+                    <div className='filter_item'>
+                      <p>All</p>
+                      <div className='filter_child'>
+                        <p>
+                          {`Movies (${
+                            acting.filter(item => item.media_type === 'movie')
+                              .length
+                          })`}
+                        </p>
+                        <p>
+                          {`TV Shows (${
+                            acting.filter(item => item.media_type === 'tv')
+                              .length
+                          })`}
+                        </p>
                       </div>
-                      <div className='filter_item'>
-                        <p>Department</p>
-                        <div className='filter_child'>
-                          {acting.length > 0 && (
-                            <p>{`Acting  (${acting.length})`}</p>
-                          )}
-                          {production.length > 0 && (
-                            <p>{`Production  (${production.length})`}</p>
-                          )}
-                          {writing.length > 0 && (
-                            <p>{`Writing  (${writing.length})`}</p>
-                          )}
-                        </div>
+                    </div>
+                    <div className='filter_item'>
+                      <p>Department</p>
+                      <div className='filter_child'>
+                        {acting.length > 0 && (
+                          <p>{`Acting  (${acting.length})`}</p>
+                        )}
+                        {production.length > 0 && (
+                          <p>{`Production  (${production.length})`}</p>
+                        )}
+                        {writing.length > 0 && (
+                          <p>{`Writing  (${writing.length})`}</p>
+                        )}
                       </div>
                     </div>
                   </div>
-                  <div className='panel_body'>
-                    {acting.length > 0 &&
-                      divideByYear(acting).map((arr, index) => (
-                        <div key={index} className='panel_group'>
-                          {arr.map((cast, index) => (
-                            <div key={index} className='panel_item'>
-                              <span className='movie_year'>
-                                {cast.release_date ? (
-                                  getYear(cast.release_date)
-                                ) : cast.first_air_date ? (
-                                  getYear(cast.first_air_date)
-                                ) : (
-                                  <FontAwesomeIcon icon={faMinus} />
-                                )}
-                              </span>
-                              <Tippy
-                                trigger='click'
-                                hideOnClick
-                                interactive
-                                render={attrs => (
-                                  <div className='box' tabIndex='-1' {...attrs}>
-                                    <MovieCard movie={cast} />
-                                  </div>
-                                )}
-                              >
-                                <div className='movie_more'></div>
-                              </Tippy>
-
-                              <span className='movie_name'>
-                                <Link to={`/${cast.media_type}/${cast.id}`}>
-                                  <strong>
-                                    {cast.original_title || cast.original_name}
-                                  </strong>
-                                </Link>
-                                {cast.character && (
-                                  <>
-                                    <span>&nbsp;</span>
-                                    <span
-                                      style={{
-                                        color: 'rgba(0,0,0,0.5)',
-                                      }}
+                  {acting.length > 0 && (
+                    <div className='person_panel'>
+                      <div className='panel_header'>
+                        <strong>Acting</strong>
+                      </div>
+                      <div className='panel_body'>
+                        {divideByYear(acting).map((arr, index) => (
+                          <div key={index} className='panel_group'>
+                            {arr.map((cast, index) => (
+                              <div key={index} className='panel_item'>
+                                <span className='movie_year'>
+                                  {cast.release_date ? (
+                                    getYear(cast.release_date)
+                                  ) : cast.first_air_date ? (
+                                    getYear(cast.first_air_date)
+                                  ) : (
+                                    <FontAwesomeIcon icon={faMinus} />
+                                  )}
+                                </span>
+                                <Tippy
+                                  trigger='click'
+                                  hideOnClick
+                                  interactive
+                                  render={attrs => (
+                                    <div
+                                      className='box'
+                                      tabIndex='-1'
+                                      {...attrs}
                                     >
-                                      {cast.media_type === 'tv' &&
-                                        ` (${formatCounter(
-                                          cast.episode_count,
-                                          'episode'
-                                        )}) `}
-                                      as
-                                    </span>
-                                    <span>&nbsp;</span>
-                                    <span>{cast.character}</span>
-                                  </>
-                                )}
-                              </span>
-                            </div>
-                          ))}
-                        </div>
-                      ))}
-                  </div>
+                                      <MovieCard movie={cast} />
+                                    </div>
+                                  )}
+                                >
+                                  <div className='movie_more'></div>
+                                </Tippy>
+
+                                <span className='movie_name'>
+                                  <Link to={`/${cast.media_type}/${cast.id}`}>
+                                    <strong>
+                                      {cast.original_title ||
+                                        cast.original_name}
+                                    </strong>
+                                  </Link>
+                                  {cast.character && (
+                                    <>
+                                      <span>&nbsp;</span>
+                                      <span
+                                        style={{
+                                          color: 'rgba(0,0,0,0.5)',
+                                        }}
+                                      >
+                                        {cast.media_type === 'tv' &&
+                                          ` (${formatCounter(
+                                            cast.episode_count,
+                                            'episode'
+                                          )}) `}
+                                        as
+                                      </span>
+                                      <span>&nbsp;</span>
+                                      <span>{cast.character}</span>
+                                    </>
+                                  )}
+                                </span>
+                              </div>
+                            ))}
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+
+                  {production.length > 0 && (
+                    <div className='person_panel'>
+                      <div className='panel_header'>
+                        <strong>Production</strong>
+                      </div>
+                      <div className='panel_body'>
+                        {divideByYear(production).map((arr, index) => (
+                          <div key={index} className='panel_group'>
+                            {arr.map((crew, index) => (
+                              <div key={index} className='panel_item'>
+                                <span className='movie_year'>
+                                  {crew.release_date ? (
+                                    getYear(crew.release_date)
+                                  ) : crew.first_air_date ? (
+                                    getYear(crew.first_air_date)
+                                  ) : (
+                                    <FontAwesomeIcon icon={faMinus} />
+                                  )}
+                                </span>
+                                <Tippy
+                                  trigger='click'
+                                  hideOnClick
+                                  interactive
+                                  render={attrs => (
+                                    <div
+                                      className='box'
+                                      tabIndex='-1'
+                                      {...attrs}
+                                    >
+                                      <MovieCard movie={crew} />
+                                    </div>
+                                  )}
+                                >
+                                  <div className='movie_more'></div>
+                                </Tippy>
+
+                                <span className='movie_name'>
+                                  <Link to={`/${crew.media_type}/${crew.id}`}>
+                                    <strong>
+                                      {crew.original_title ||
+                                        crew.original_name}
+                                    </strong>
+                                  </Link>
+                                  <span>&nbsp;</span>
+                                  <span
+                                    style={{
+                                      color: 'rgba(0,0,0,0.5)',
+                                    }}
+                                  >
+                                    ... {` ${crew.job} `}
+                                  </span>
+                                  <span>&nbsp;</span>
+                                  <span>{crew.character}</span>
+                                </span>
+                              </div>
+                            ))}
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+
+                  {writing.length > 0 && (
+                    <div className='person_panel'>
+                      <div className='panel_header'>
+                        <strong>Writing</strong>
+                      </div>
+                      <div className='panel_body'>
+                        {divideByYear(writing).map((arr, index) => (
+                          <div key={index} className='panel_group'>
+                            {arr.map((crew, index) => (
+                              <div key={index} className='panel_item'>
+                                <span className='movie_year'>
+                                  {crew.release_date ? (
+                                    getYear(crew.release_date)
+                                  ) : crew.first_air_date ? (
+                                    getYear(crew.first_air_date)
+                                  ) : (
+                                    <FontAwesomeIcon icon={faMinus} />
+                                  )}
+                                </span>
+                                <Tippy
+                                  trigger='click'
+                                  hideOnClick
+                                  interactive
+                                  render={attrs => (
+                                    <div
+                                      className='box'
+                                      tabIndex='-1'
+                                      {...attrs}
+                                    >
+                                      <MovieCard movie={crew} />
+                                    </div>
+                                  )}
+                                >
+                                  <div className='movie_more'></div>
+                                </Tippy>
+
+                                <span className='movie_name'>
+                                  <Link to={`/${crew.media_type}/${crew.id}`}>
+                                    <strong>
+                                      {crew.original_title ||
+                                        crew.original_name}
+                                    </strong>
+                                  </Link>
+                                  <span>&nbsp;</span>
+                                  <span
+                                    style={{
+                                      color: 'rgba(0,0,0,0.5)',
+                                    }}
+                                  >
+                                    ... {` ${crew.job} `}
+                                  </span>
+                                  <span>&nbsp;</span>
+                                  <span>{crew.character}</span>
+                                </span>
+                              </div>
+                            ))}
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+                  {directing.length > 0 && (
+                    <div className='person_panel'>
+                      <div className='panel_header'>
+                        <strong>Directing</strong>
+                      </div>
+                      <div className='panel_body'>
+                        {divideByYear(directing).map((arr, index) => (
+                          <div key={index} className='panel_group'>
+                            {arr.map((crew, index) => (
+                              <div key={index} className='panel_item'>
+                                <span className='movie_year'>
+                                  {crew.release_date ? (
+                                    getYear(crew.release_date)
+                                  ) : crew.first_air_date ? (
+                                    getYear(crew.first_air_date)
+                                  ) : (
+                                    <FontAwesomeIcon icon={faMinus} />
+                                  )}
+                                </span>
+                                <Tippy
+                                  trigger='click'
+                                  hideOnClick
+                                  interactive
+                                  render={attrs => (
+                                    <div
+                                      className='box'
+                                      tabIndex='-1'
+                                      {...attrs}
+                                    >
+                                      <MovieCard movie={crew} />
+                                    </div>
+                                  )}
+                                >
+                                  <div className='movie_more'></div>
+                                </Tippy>
+
+                                <span className='movie_name'>
+                                  <Link to={`/${crew.media_type}/${crew.id}`}>
+                                    <strong>
+                                      {crew.original_title ||
+                                        crew.original_name}
+                                    </strong>
+                                  </Link>
+                                  <span>&nbsp;</span>
+                                  <span
+                                    style={{
+                                      color: 'rgba(0,0,0,0.5)',
+                                    }}
+                                  >
+                                    ... {` ${crew.job} `}
+                                  </span>
+                                  <span>&nbsp;</span>
+                                  <span>{crew.character}</span>
+                                </span>
+                              </div>
+                            ))}
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+                  {crew.length > 0 && (
+                    <div className='person_panel'>
+                      <div className='panel_header'>
+                        <strong>Crew</strong>
+                      </div>
+                      <div className='panel_body'>
+                        {divideByYear(crew).map((arr, index) => (
+                          <div key={index} className='panel_group'>
+                            {arr.map((crew, index) => (
+                              <div key={index} className='panel_item'>
+                                <span className='movie_year'>
+                                  {crew.release_date ? (
+                                    getYear(crew.release_date)
+                                  ) : crew.first_air_date ? (
+                                    getYear(crew.first_air_date)
+                                  ) : (
+                                    <FontAwesomeIcon icon={faMinus} />
+                                  )}
+                                </span>
+                                <Tippy
+                                  trigger='click'
+                                  hideOnClick
+                                  interactive
+                                  render={attrs => (
+                                    <div
+                                      className='box'
+                                      tabIndex='-1'
+                                      {...attrs}
+                                    >
+                                      <MovieCard movie={crew} />
+                                    </div>
+                                  )}
+                                >
+                                  <div className='movie_more'></div>
+                                </Tippy>
+
+                                <span className='movie_name'>
+                                  <Link to={`/${crew.media_type}/${crew.id}`}>
+                                    <strong>
+                                      {crew.original_title ||
+                                        crew.original_name}
+                                    </strong>
+                                  </Link>
+                                  <span>&nbsp;</span>
+                                  <span
+                                    style={{
+                                      color: 'rgba(0,0,0,0.5)',
+                                    }}
+                                  >
+                                    ... {` ${crew.job} `}
+                                  </span>
+                                  <span>&nbsp;</span>
+                                  <span>{crew.character}</span>
+                                </span>
+                              </div>
+                            ))}
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+                  {creator.length > 0 && (
+                    <div className='person_panel'>
+                      <div className='panel_header'>
+                        <strong>Creator</strong>
+                      </div>
+                      <div className='panel_body'>
+                        {divideByYear(creator).map((arr, index) => (
+                          <div key={index} className='panel_group'>
+                            {arr.map((crew, index) => (
+                              <div key={index} className='panel_item'>
+                                <span className='movie_year'>
+                                  {crew.release_date ? (
+                                    getYear(crew.release_date)
+                                  ) : crew.first_air_date ? (
+                                    getYear(crew.first_air_date)
+                                  ) : (
+                                    <FontAwesomeIcon icon={faMinus} />
+                                  )}
+                                </span>
+                                <Tippy
+                                  trigger='click'
+                                  hideOnClick
+                                  interactive
+                                  render={attrs => (
+                                    <div
+                                      className='box'
+                                      tabIndex='-1'
+                                      {...attrs}
+                                    >
+                                      <MovieCard movie={crew} />
+                                    </div>
+                                  )}
+                                >
+                                  <div className='movie_more'></div>
+                                </Tippy>
+
+                                <span className='movie_name'>
+                                  <Link to={`/${crew.media_type}/${crew.id}`}>
+                                    <strong>
+                                      {crew.original_title ||
+                                        crew.original_name}
+                                    </strong>
+                                  </Link>
+                                  <span>&nbsp;</span>
+                                  <span
+                                    style={{
+                                      color: 'rgba(0,0,0,0.5)',
+                                    }}
+                                  >
+                                    ... {` ${crew.job} `}
+                                  </span>
+                                  <span>&nbsp;</span>
+                                  <span>{crew.character}</span>
+                                </span>
+                              </div>
+                            ))}
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  )}
                 </div>
-                {production.length > 0 && (
-                  <div className='person_panel'>
-                    <div className='panel_header'>
-                      <strong>Production</strong>
-                    </div>
-                    <div className='panel_body'>
-                      {divideByYear(production).map((arr, index) => (
-                        <div key={index} className='panel_group'>
-                          {arr.map((crew, index) => (
-                            <div key={index} className='panel_item'>
-                              <span className='movie_year'>
-                                {crew.release_date ? (
-                                  getYear(crew.release_date)
-                                ) : crew.first_air_date ? (
-                                  getYear(crew.first_air_date)
-                                ) : (
-                                  <FontAwesomeIcon icon={faMinus} />
-                                )}
-                              </span>
-                              <Tippy
-                                trigger='click'
-                                hideOnClick
-                                interactive
-                                render={attrs => (
-                                  <div className='box' tabIndex='-1' {...attrs}>
-                                    <MovieCard movie={crew} />
-                                  </div>
-                                )}
-                              >
-                                <div className='movie_more'></div>
-                              </Tippy>
-
-                              <span className='movie_name'>
-                                <Link to={`/${crew.media_type}/${crew.id}`}>
-                                  <strong>
-                                    {crew.original_title || crew.original_name}
-                                  </strong>
-                                </Link>
-                                <span>&nbsp;</span>
-                                <span
-                                  style={{
-                                    color: 'rgba(0,0,0,0.5)',
-                                  }}
-                                >
-                                  ... {` ${crew.job} `}
-                                </span>
-                                <span>&nbsp;</span>
-                                <span>{crew.character}</span>
-                              </span>
-                            </div>
-                          ))}
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-                )}
-
-                {writing.length > 0 && (
-                  <div className='person_panel'>
-                    <div className='panel_header'>
-                      <strong>Writing</strong>
-                    </div>
-                    <div className='panel_body'>
-                      {divideByYear(writing).map((arr, index) => (
-                        <div key={index} className='panel_group'>
-                          {arr.map((crew, index) => (
-                            <div key={index} className='panel_item'>
-                              <span className='movie_year'>
-                                {crew.release_date ? (
-                                  getYear(crew.release_date)
-                                ) : crew.first_air_date ? (
-                                  getYear(crew.first_air_date)
-                                ) : (
-                                  <FontAwesomeIcon icon={faMinus} />
-                                )}
-                              </span>
-                              <Tippy
-                                trigger='click'
-                                hideOnClick
-                                interactive
-                                render={attrs => (
-                                  <div className='box' tabIndex='-1' {...attrs}>
-                                    <MovieCard movie={crew} />
-                                  </div>
-                                )}
-                              >
-                                <div className='movie_more'></div>
-                              </Tippy>
-
-                              <span className='movie_name'>
-                                <Link to={`/${crew.media_type}/${crew.id}`}>
-                                  <strong>
-                                    {crew.original_title || crew.original_name}
-                                  </strong>
-                                </Link>
-                                <span>&nbsp;</span>
-                                <span
-                                  style={{
-                                    color: 'rgba(0,0,0,0.5)',
-                                  }}
-                                >
-                                  ... {` ${crew.job} `}
-                                </span>
-                                <span>&nbsp;</span>
-                                <span>{crew.character}</span>
-                              </span>
-                            </div>
-                          ))}
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-                )}
               </div>
             </Grid>
           </Grid>

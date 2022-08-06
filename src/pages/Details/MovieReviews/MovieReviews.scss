@@ -1,0 +1,20 @@
+.review_details_wrapper {
+  padding: 30px 0;
+}
+.review_details {
+  .review_item {
+    margin-bottom: 30px;
+    box-shadow: 0 2px 8px rgb(0 0 0 / 10%);
+  }
+}
+button.write_review {
+  text-transform: uppercase;
+  background-color: #000;
+  color: #fff;
+  border-radius: 99px;
+  padding: 6px 20px;
+  font-weight: 600;
+  span {
+    padding-left: 10px;
+  }
+}

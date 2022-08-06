@@ -156,7 +156,17 @@
   }
 }
 .character {
+  display: flex;
+}
+.character_item {
+  a {
+    color: #fff;
+    &:hover {
+      color: rgba(255, 255, 255, 0.7);
+    }
+  }
   margin-top: 20px;
+  flex: 0 0 33.33%;
   h3 {
     font-weight: 600;
   }
@@ -165,6 +175,9 @@
   }
 }
 .content_wrapper {
+  a {
+    color: #000;
+  }
   padding: 30px 0;
 }
 .content_left {
@@ -203,53 +216,7 @@
   overflow: scroll;
   padding-bottom: 20px;
 }
-.cast_item {
-  min-width: 140px;
-  margin-right: 15px;
-  border-radius: 8px;
-  border: 1px solid var(--lightGrey);
-  overflow: hidden;
-  padding-bottom: 10px;
-}
-.cast_img {
-  height: 206px;
-  width: 138px;
-  display: flex;
-  align-items: center;
-  background-color: var(--lightGrey);
-  img {
-    width: 100%;
-  }
-}
-.cast {
-  &_name {
-    padding: 10px 10px 0 10px;
-    font-weight: 700;
-    font-size: 1.6rem;
-  }
-  &_character {
-    line-height: 1.8rem;
-    font-size: 1.5rem;
-    padding: 0 10px;
-  }
-  &_count_episodes {
-    color: rgba(0, 0, 0, 0.5);
-    padding: 0 10px;
-    font-size: 1.5rem;
-  }
-  .all {
-  }
-}
-.cast_name {
-  a {
-    display: block;
-    color: #000;
-    text-decoration: none;
-    &:hover {
-      color: rgba(0, 0, 0, 0.5);
-    }
-  }
-}
+
 .lazy-load-image-background.opacity.lazy-load-image-loaded {
   img {
     width: 100%;
@@ -268,6 +235,9 @@
 .season_img {
   min-width: 130px;
   width: 130px;
+  height: 195px;
+  display: flex;
+  align-items: center;
 }
 .season_right {
   padding: 20px;
@@ -339,11 +309,16 @@
 }
 .review_date a {
   font-weight: 600;
+  color: var(--lightBlue);
 }
 .review_content {
   padding-top: 20px;
-  a {
+  .rest {
     text-decoration: underline;
+    cursor: pointer;
+    &:hover {
+      color: rgba(0, 0, 0, 0.5);
+    }
   }
 }
 .discussion_item {
@@ -418,6 +393,12 @@
   }
 }
 .recommendation_list {
+  a {
+    color: #000;
+    &:hover {
+      color: #000;
+    }
+  }
   display: flex;
   overflow: scroll;
   padding-bottom: 20px;
@@ -469,6 +450,9 @@
   }
 }
 .content_right {
+  a {
+    color: #000;
+  }
   ul {
     padding: 5px 0;
   }
@@ -496,6 +480,9 @@
   strong {
     display: block;
   }
+}
+.network_img {
+  margin-bottom: 10px;
 }
 .score_bar {
   padding: 6px 10px;

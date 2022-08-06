@@ -81,7 +81,7 @@ function Card({ data, type }) {
         </div>
       </div>
       <div className='card_desc'>
-        <Link to={`/${type}/${data.id}`}>
+        <Link to={`/${data.media_type ? data.media_type : type}/${data.id}`}>
           <h4 className='card_desc_name'>{data.name || data.title}</h4>
         </Link>
         <p className='card_desc_date'>

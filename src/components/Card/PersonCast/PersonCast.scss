@@ -1,0 +1,71 @@
+.cast_person {
+  padding-bottom: 10px;
+  display: flex;
+  align-items: center;
+  .cast_img {
+    background-color: #d7d7d7;
+    width: 66px;
+    height: 66px;
+    border-radius: 4px;
+    overflow: hidden;
+    margin-right: 20px;
+    img {
+      width: 100%;
+    }
+  }
+  .cast_info {
+    a {
+      color: #000;
+    }
+    p {
+      font-size: 1.44rem;
+      span {
+        color: rgba(0, 0, 0, 0.5);
+      }
+    }
+  }
+}
+.cast_person.intro {
+  min-width: 140px;
+  margin-right: 15px;
+  border-radius: 8px;
+  border: 1px solid var(--lightGrey);
+  overflow: hidden;
+  padding-bottom: 10px;
+  display: flex;
+  align-items: flex-start;
+  flex-direction: column;
+  .cast_img {
+    height: 206px;
+    width: 138px;
+    display: flex;
+    align-items: center;
+    background-color: var(--lightGrey);
+    margin-right: 0;
+    img {
+      width: 100%;
+    }
+  }
+  .cast_info {
+    padding: 10px;
+    a {
+      display: inline-block;
+      color: #000;
+      text-decoration: none;
+      &:hover {
+        color: rgba(0, 0, 0, 0.5);
+      }
+    }
+    p {
+      text-align: left;
+      line-height: 1.8rem;
+      font-size: 1.5rem;
+      span {
+        line-height: 2.2rem;
+        display: block;
+        color: rgba(0, 0, 0, 0.5);
+        font-size: 1.5rem;
+      }
+    }
+  }
+}

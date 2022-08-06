@@ -90,45 +90,55 @@ export const popupAdd = {
     ],
   ],
 }
-const overviewDetails = {
-  nav: { text: 'Overview' },
-  subnav: [
-    { text: 'Main', link: '/' },
-    { text: 'Alternative Titles', link: '/' },
-    { text: 'Cast & Crew', link: '/' },
-    { text: 'Episode Groups', link: '/' },
-    { text: 'Seasons', link: '/' },
-    { text: 'Translations', link: '/' },
-    { text: 'Changes', link: '/' },
-    { text: 'Report', link: '/' },
-    { text: 'Edit', link: '/' },
-  ],
+const getMenu = (textList, linkList, title) => {
+  return {
+    nav: { text: title },
+    subnav: textList.map((item, index) => {
+      return {
+        text: item,
+        link: linkList[index],
+      }
+    }),
+  }
+}
+const overviewDetails = (linkList, isTV) => {
+  const textList = isTV
+    ? [
+        'Main',
+        'Alternative Titles',
+        'Cast & Crew',
+        'Episode Groups',
+        'Seasons',
+        'Translations',
+        'Changes',
+        'Report',
+        'Edit',
+      ]
+    : [
+        'Main',
+        'Alternative Titles',
+        'Cast & Crew',
+        'Release Dates',
+        'Translations',
+        'Changes',
+      ]
+  return getMenu(textList, linkList, 'Overview')
 }
 
-const mediaDetails = {
-  nav: { text: 'Media' },
-  subnav: [
-    { text: 'Backdrops', link: '/' },
-    { text: 'Logos', link: '/' },
-    { text: 'Posters', link: '/' },
-    { text: 'Videos', link: '/' },
-  ],
+const mediaDetails = linkList => {
+  const textList = ['Backdrops', 'Logos', 'Posters', 'Videos']
+  return getMenu(textList, linkList, 'Media')
 }
-const fandomDetails = {
-  nav: { text: 'Fandom' },
-  subnav: [
-    { text: 'Discussions', link: '/' },
-    { text: 'Reviews', link: '/' },
-  ],
+const fandomDetails = linkList => {
+  const textList = ['Discussions', 'Reviews']
+  return getMenu(textList, linkList, 'Fandom')
 }
-const shareDetails = {
-  nav: { text: 'Share' },
-  subnav: [
-    { text: 'Share Link', link: '/' },
-    { text: 'Facebook', link: '/' },
-    { text: 'Tweet', link: '/' },
-  ],
+
+const shareDetails = linkList => {
+  const textList = ['Share Link', 'Facebook', 'Tweet']
+  return getMenu(textList, linkList, 'Share')
 }
+
 const overviewPerson = {
   nav: { text: 'Overview' },
   subnav: [
@@ -156,12 +166,14 @@ const sharePerson = {
   ],
 }
 
-export const detailsNavList = [
-  overviewDetails,
-  mediaDetails,
-  fandomDetails,
-  shareDetails,
-]
+export const detailsNavList = (overview, media, fandom, share, isTV) => {
+  return [
+    overviewDetails(overview, isTV),
+    mediaDetails(media),
+    fandomDetails(fandom),
+    shareDetails(share),
+  ]
+}
 export const personNavList = [
   overviewPerson,
   mediaPerson,

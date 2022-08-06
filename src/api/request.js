@@ -129,6 +129,12 @@ const request = {
     )
     return result.data
   },
+  getImages: async (type, id) => {
+    const result = await mainAxiosClient.get(
+      `/${type}/${id}/images?api_key=${API_KEY}`
+    )
+    return result.data
+  },
   getDiscover: async (type, params) => {
     const result = await mainAxiosClient.get(
       `/discover/${type}?api_key=${API_KEY}`,
@@ -159,12 +165,7 @@ const request = {
     )
     return result.data
   },
-  getImages: async (type, id) => {
-    const result = await mainAxiosClient.get(
-      `/${type}/${id}/images?api_key=${API_KEY}`
-    )
-    return result.data
-  },
+
   getRecommendations: async (type, id) => {
     const result = await mainAxiosClient.get(
       `/${type}/${id}/recommendations?api_key=${API_KEY}`
@@ -221,6 +222,12 @@ const request = {
   getTVCredits: async id => {
     const result = await mainAxiosClient.get(
       `/person/${id}/tv_credits?api_key=${API_KEY}`
+    )
+    return result.data
+  },
+  getTVSeasonsDetails: async (id, seasonNumber) => {
+    const result = await mainAxiosClient.get(
+      `/tv/${id}/season/${seasonNumber}?api_key=${API_KEY}`
     )
     return result.data
   },
