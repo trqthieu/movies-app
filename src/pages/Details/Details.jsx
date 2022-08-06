@@ -20,7 +20,9 @@ function Details() {
           '/changes',
           '/report',
           '/edit',
-        ]
+        ].map(item => {
+          return `/${type}/${id}${item}`
+        })
       : [
           '/',
           '/titles',
