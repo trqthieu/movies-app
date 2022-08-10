@@ -110,13 +110,6 @@ const request = {
     )
     return result.data.results
   },
-  getTrailer: async type => {
-    const result = await mainAxiosClient.get(
-      `/discover/${type}?api_key=${API_KEY}`
-    )
-    return result.data.results
-  },
-
   getDetails: async (type, id) => {
     const result = await mainAxiosClient.get(
       `/${type}/${id}?api_key=${API_KEY}`
@@ -135,7 +128,13 @@ const request = {
     )
     return result.data
   },
-  getDiscover: async (type, params) => {
+  getTrailer: async type => {
+    const result = await mainAxiosClient.get(
+      `/discover/${type}?api_key=${API_KEY}`
+    )
+    return result.data.results
+  },
+  getDiscover: async (type, params = {}) => {
     const result = await mainAxiosClient.get(
       `/discover/${type}?api_key=${API_KEY}`,
       { params }
@@ -228,6 +227,18 @@ const request = {
   getTVSeasonsDetails: async (id, seasonNumber) => {
     const result = await mainAxiosClient.get(
       `/tv/${id}/season/${seasonNumber}?api_key=${API_KEY}`
+    )
+    return result.data
+  },
+  getNetworkDetails: async networkId => {
+    const result = await mainAxiosClient.get(
+      `network/${networkId}?api_key=${API_KEY}`
+    )
+    return result.data
+  },
+  getKeywordDetails: async keywordId => {
+    const result = await mainAxiosClient.get(
+      `keyword/${keywordId}?api_key=${API_KEY}`
     )
     return result.data
   },

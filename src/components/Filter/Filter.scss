@@ -106,6 +106,7 @@ input.parent_checkbox:checked ~ .sub_checkbox {
   width: 100%;
   border: none;
   overflow: hidden;
+  & > *,
   a {
     display: block;
     color: #fff;
@@ -125,6 +126,7 @@ input.parent_checkbox:checked ~ .sub_checkbox {
 }
 .button_loadmore {
   border-radius: 8px;
+  > *,
   a {
     font-size: 2.2rem;
     font-weight: 700;

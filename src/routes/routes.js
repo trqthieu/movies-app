@@ -5,11 +5,13 @@ import MovieMedia from 'src/pages/Details/MovieMedia/MovieMedia'
 import MovieReviews from 'src/pages/Details/MovieReviews/MovieReviews'
 import Seasons from 'src/pages/Details/Seasons/Seasons'
 import Home from 'src/pages/Home/Home.jsx'
+import Keyword from 'src/pages/Keyword/Keyword'
 import Movie from 'src/pages/Movie/Movie.jsx'
 import NowPlaying from 'src/pages/Movie/NowPlaying/NowPlaying'
 import Popular from 'src/pages/Movie/Popular/Popular'
 import TopRated from 'src/pages/Movie/TopRated/TopRated'
 import Upcoming from 'src/pages/Movie/Upcoming/Upcoming'
+import Network from 'src/pages/Network/Network'
 import Person from 'src/pages/Person/Person.jsx'
 import PersonDetails from 'src/pages/Person/PersonDetails/PersonDetails'
 import PopularPerson from 'src/pages/Person/PopularPerson/PopularPerson'
@@ -24,6 +26,8 @@ export const routesConfig = {
   movie: '/movie/*',
   tv: '/tv/*',
   person: '/person/*',
+  keyword: '/keyword/:keywordId-:type',
+  network: '/network/:networkId',
 }
 const routesPath = [
   {
@@ -41,6 +45,14 @@ const routesPath = [
   {
     path: routesConfig.person,
     element: <Person />,
+  },
+  {
+    path: routesConfig.network,
+    element: <Network />,
+  },
+  {
+    path: routesConfig.keyword,
+    element: <Keyword />,
   },
 ]
 export const moviePaths = {

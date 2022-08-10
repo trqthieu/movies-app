@@ -1,17 +1,22 @@
 import {
   faArrowTrendUp,
+  faFilm,
   faSearch,
+  faTv,
+  faUser,
   faXmark,
 } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { Container } from '@mui/material'
 import React, { useEffect, useRef, useState } from 'react'
+import { Link } from 'react-router-dom'
 import request from 'src/api/request'
 import useDebounce from 'src/hooks/useDebounce'
 import './Search.scss'
-function Search() {
+function Search({ setSearching }) {
   const inputRef = useRef()
   const [searchResults, setSearchResults] = useState([])
+  console.log(searchResults)
   const [input, setInput] = useState('')
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState()
@@ -94,10 +99,25 @@ function Search() {
               <div key={searchResult.id} className='search_item'>
                 <Container>
                   <div className='result'>
-                    <FontAwesomeIcon icon={faSearch} />
-                    <p className='text'>
-                      {searchResult.name || searchResult.original_title}
-                    </p>
+                    <FontAwesomeIcon
+                      icon={
+                        searchResult.media_type === 'person'
+                          ? faUser
+                          : searchResult.media_type === 'tv'
+                          ? faTv
+                          : searchResult.media_type === 'movie'
+                          ? faFilm
+                          : faSearch
+                      }
+                    />
+                    <Link
+                      onClick={() => setSearching(false)}
+                      to={`/${searchResult.media_type}/${searchResult.id}`}
+                    >
+                      <p className='text'>
+                        {searchResult.name || searchResult.original_title}
+                      </p>
+                    </Link>
                   </div>
                 </Container>
               </div>

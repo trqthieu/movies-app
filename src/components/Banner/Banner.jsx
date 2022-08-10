@@ -1,7 +1,6 @@
 import { Container } from '@mui/material'
-import React, { useRef, useState } from 'react'
+import { useRef, useState } from 'react'
 import request from 'src/api/request'
-import Card from '../Card/Card'
 import './Banner.scss'
 function Banner() {
   const inputRef = useRef()

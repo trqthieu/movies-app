@@ -35,7 +35,7 @@ function MovieCard({ movie }) {
             <span>{movie.vote_average.toFixed()}</span>
           </div>
         </div>
-        <p className='overview'>{formatText(movie.overview, 128)}</p>
+        <p className='overview'>{movie.overview}</p>
         <div className='movie_interact'>
           <div className='interact_item'>
             <FontAwesomeIcon icon={faHeart} />

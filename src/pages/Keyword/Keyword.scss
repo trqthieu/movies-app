@@ -1,0 +1,25 @@
+.keyword_banner_wrapper {
+  background-image: radial-gradient(
+    at 30% top,
+    #073844 0%,
+    rgba(3, 37, 65, 1) 70%
+  );
+}
+.keyword_banner {
+  background-image: url('../../assets/images/background-network.svg');
+  background-position: center;
+  background-size: cover;
+  display: flex;
+  justify-content: space-between;
+  padding: 20px 0;
+  h3 {
+    color: #fff;
+    font-size: 3.2rem;
+    font-weight: 700;
+  }
+  span {
+    color: rgba(255, 255, 255, 0.5);
+    font-size: 2.4rem;
+    font-weight: 600;
+  }
+}

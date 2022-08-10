@@ -474,15 +474,19 @@
   &:last-child {
     margin-bottom: 0;
   }
-  img {
-    height: 30px;
+  .network_img {
+    img {
+      height: 30px;
+    }
   }
   strong {
     display: block;
   }
 }
-.network_img {
-  margin-bottom: 10px;
+.panel {
+  .network_img {
+    margin-bottom: 10px;
+  }
 }
 .score_bar {
   padding: 6px 10px;

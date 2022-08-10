@@ -336,10 +336,14 @@ function MovieDetails() {
                                 {seasons[currentSeason].name}
                               </Link>
                             </h2>
-                            <h4>
-                              {seasons[currentSeason].air_date.split('-')[0]} |{' '}
-                              {seasons[currentSeason].episode_count} Episodes
-                            </h4>
+                            {seasons[currentSeason].air_date && (
+                              <h4>
+                                {seasons[currentSeason].air_date.split('-')[0]}{' '}
+                                | {seasons[currentSeason].episode_count}{' '}
+                                Episodes
+                              </h4>
+                            )}
+
                             <p>
                               {seasons[currentSeason].overview ||
                                 `${seasons[currentSeason].name} of ${
@@ -683,7 +687,7 @@ function MovieDetails() {
                           {keywords.map(keyword => {
                             return (
                               <li key={keyword.id}>
-                                <Link to={`/keyword/${keyword.id}`}>
+                                <Link to={`/keyword/${keyword.id}-${type}`}>
                                   {keyword.name}
                                 </Link>
                               </li>

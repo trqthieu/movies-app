@@ -196,7 +196,7 @@ function Header() {
           </div>
         </Container>
       </div>
-      {searching && <Search />}
+      {searching && <Search setSearching={setSearching} />}
     </>
   )
 }
