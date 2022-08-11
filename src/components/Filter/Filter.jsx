@@ -1,15 +1,14 @@
 import { faAngleDown } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import React, { useEffect, useRef, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import request from 'src/api/request'
-import Search from '../Search/Search'
 import CountriesSelect from '../Form/CountriesSelect/CountriesSelect'
+import KeywordInput from '../Form/KeywordInput/KeywordInput'
 import LanguageSelect from '../Form/LanguageSelect/LanguageSelect'
+import ProvidersSelect from '../Form/ProvidersSelect/ProvidersSelect'
 import RangeSelect from '../Form/RangeSelect/RangeSelect'
 import './Filter.scss'
-import KeywordInput from '../Form/KeywordInput/KeywordInput'
-import ProvidersSelect from '../Form/ProvidersSelect/ProvidersSelect'
 const filterData = {
   sort: {
     title: 'Sort',

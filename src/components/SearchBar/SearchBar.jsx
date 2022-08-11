@@ -12,8 +12,8 @@ import React, { useEffect, useRef, useState } from 'react'
 import { Link } from 'react-router-dom'
 import request from 'src/api/request'
 import useDebounce from 'src/hooks/useDebounce'
-import './Search.scss'
-function Search({ setSearching }) {
+import './SearchBar.scss'
+function SearchBar({ setSearching }) {
   const inputRef = useRef()
   const [searchResults, setSearchResults] = useState([])
   console.log(searchResults)
@@ -35,9 +35,8 @@ function Search({ setSearching }) {
       try {
         setLoading(true)
         setError()
-        const result = await request.getSearchResults(debounce)
-        console.log(result)
-        setSearchResults(result)
+        const result = await request.getSearchResults('multi', debounce)
+        setSearchResults(result.results)
       } catch (error) {
         setError(error)
       }
@@ -134,4 +133,4 @@ function Search({ setSearching }) {
   )
 }
 
-export default Search
+export default SearchBar

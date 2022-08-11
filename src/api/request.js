@@ -3,7 +3,6 @@ import mainAxiosClient, { imageAxiosClient } from './axios'
 const API_KEY = '62952951c7d597d5ecd719dd07582bee'
 export const IMAGE_PATH = 'https://image.tmdb.org/t/p/original'
 const requestPaths = {
-  multiSearchQuery: `/search/multi?api_key=${API_KEY}`,
   keywordSearchQuery: `/search/keyword?api_key=${API_KEY}`,
   movieSearchQuery: `/search/movie?api_key=${API_KEY}`,
   languagesQuery: `/configuration/languages?api_key=${API_KEY}`,
@@ -20,14 +19,18 @@ const request = {
     const result = imageAxiosClient.get(path)
     return result
   },
-  getSearchResults: async value => {
+  getSearchResults: async (type, query, page = 1) => {
     const params = {
-      query: value,
+      query,
+      page,
     }
-    const result = await mainAxiosClient.get(requestPaths.multiSearchQuery, {
-      params,
-    })
-    return result.data.results
+    const result = await mainAxiosClient.get(
+      `/search/${type}?api_key=${API_KEY}`,
+      {
+        params,
+      }
+    )
+    return result.data
   },
   getSearchKeywords: async value => {
     const params = {

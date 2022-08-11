@@ -7,20 +7,19 @@ import {
   faXmark,
 } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import Tippy from '@tippyjs/react'
-import React, { useState } from 'react'
+import { Container } from '@mui/material'
+import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import images from 'src/assets/images/images'
-import Language from '../Popup/Language/Language'
-import NavItem from '../NavItem/NavItem'
-import Notification from '../Popup/Notification/Notification'
-import Search from '../Search/Search'
-import './Header.scss'
+import { navList, popupAdd, popupUser } from 'src/data/data'
 import 'tippy.js/dist/tippy.css'
 import 'tippy.js/themes/light.css'
+import NavItem from '../NavItem/NavItem'
+import Language from '../Popup/Language/Language'
+import Notification from '../Popup/Notification/Notification'
 import Popup from '../Popup/Popup'
-import { popupUser, popupAdd, navList } from 'src/data/data'
-import { Container } from '@mui/material'
+import SearchBar from '../SearchBar/SearchBar'
+import './Header.scss'
 
 function Header() {
   const [searching, setSearching] = useState(false)
@@ -196,7 +195,7 @@ function Header() {
           </div>
         </Container>
       </div>
-      {searching && <Search setSearching={setSearching} />}
+      {searching && <SearchBar setSearching={setSearching} />}
     </>
   )
 }

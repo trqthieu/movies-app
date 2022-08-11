@@ -15,6 +15,7 @@ import Network from 'src/pages/Network/Network'
 import Person from 'src/pages/Person/Person.jsx'
 import PersonDetails from 'src/pages/Person/PersonDetails/PersonDetails'
 import PopularPerson from 'src/pages/Person/PopularPerson/PopularPerson'
+import Search from 'src/pages/Search/Search'
 import AiringToday from 'src/pages/Tv/AiringToday/AiringToday'
 import OnTV from 'src/pages/Tv/OnTV/OnTV'
 import PopularTV from 'src/pages/Tv/Popular/Popular'
@@ -28,6 +29,7 @@ export const routesConfig = {
   person: '/person/*',
   keyword: '/keyword/:keywordId-:type',
   network: '/network/:networkId',
+  search: '/search/:query',
 }
 const routesPath = [
   {
@@ -53,6 +55,10 @@ const routesPath = [
   {
     path: routesConfig.keyword,
     element: <Keyword />,
+  },
+  {
+    path: routesConfig.search,
+    element: <Search />,
   },
 ]
 export const moviePaths = {
