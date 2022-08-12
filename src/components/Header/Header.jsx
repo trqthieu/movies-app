@@ -8,7 +8,9 @@ import {
 } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { Container } from '@mui/material'
+import Tippy from '@tippyjs/react'
 import { useState } from 'react'
+import { LazyLoadImage } from 'react-lazy-load-image-component'
 import { Link } from 'react-router-dom'
 import images from 'src/assets/images/images'
 import { navList, popupAdd, popupUser } from 'src/data/data'
@@ -24,8 +26,7 @@ import './Header.scss'
 function Header() {
   const [searching, setSearching] = useState(false)
   const [mobileNav, setMobileNav] = useState([])
-  const [popupIndex, setPopupIndex] = useState()
-  const [login, setLogin] = useState(true)
+  const [login, setLogin] = useState(false)
   const handleMobileNav = index => {
     let newMobileNav = [...mobileNav]
     if (!newMobileNav.includes(index)) {
@@ -37,13 +38,6 @@ function Header() {
     }
 
     setMobileNav(newMobileNav)
-  }
-  const handlePopup = index => {
-    if (popupIndex === index) {
-      setPopupIndex()
-      return
-    }
-    setPopupIndex(index)
   }
 
   return (
@@ -99,7 +93,11 @@ function Header() {
             <div className='header_left'>
               <div className='header_logo'>
                 <Link to={'/'}>
-                  <img src={images.logo} alt='Movies Logo' />
+                  <LazyLoadImage
+                    effect='opacity'
+                    src={images.logo}
+                    alt='Movies Logo'
+                  />
                 </Link>
               </div>
               <div className='header_nav'>
@@ -110,19 +108,32 @@ function Header() {
             </div>
             <div className='header_right'>
               <div className='header_nav'>
-                <div className='header_nav_item icon'>
-                  <FontAwesomeIcon
-                    onClick={() => handlePopup(0)}
-                    icon={faPlus}
-                  />
-                  {popupIndex === 0 && <Popup popupData={popupAdd} />}
-                </div>
-                <div className='header_nav_item language'>
-                  <p onClick={() => handlePopup(1)} className='language_text'>
-                    EN
-                  </p>
-                  {popupIndex === 1 && <Language />}
-                </div>
+                <Tippy
+                  theme='light'
+                  placement='bottom'
+                  hideOnClick
+                  interactive
+                  trigger='click'
+                  content={<Popup popupData={popupAdd} />}
+                >
+                  <div className='header_nav_item icon'>
+                    <FontAwesomeIcon icon={faPlus} />
+                  </div>
+                </Tippy>
+
+                <Tippy
+                  theme='light'
+                  placement='bottom'
+                  hideOnClick
+                  interactive
+                  trigger='click'
+                  content={<Language />}
+                >
+                  <div className='header_nav_item language'>
+                    <p className='language_text'>EN</p>
+                  </div>
+                </Tippy>
+
                 {!login ? (
                   <>
                     <Link className='header_nav_item' to={'/login'}>
@@ -134,43 +145,59 @@ function Header() {
                   </>
                 ) : (
                   <>
-                    <div className='header_nav_item icon'>
-                      <FontAwesomeIcon
-                        onClick={() => handlePopup(2)}
-                        icon={faBell}
-                      />
-                      {popupIndex === 2 && <Notification />}
-                    </div>
-
-                    {/* <Tippy
+                    <Tippy
                       theme='light'
-                      arrow
-                      duration={100}
-                      content='Profile and Settings'
-                    > */}
-                    <div className='header_nav_item avatar'>
-                      <img
-                        onClick={() => handlePopup(3)}
-                        src={images.avatar}
-                        alt='avatar'
-                      />
-                      {popupIndex === 3 && <Popup popupData={popupUser} />}
-                    </div>
-                    {/* </Tippy> */}
+                      placement='bottom'
+                      hideOnClick
+                      interactive
+                      trigger='click'
+                      content={<Notification />}
+                    >
+                      <div className='header_nav_item icon'>
+                        <FontAwesomeIcon icon={faBell} />
+                      </div>
+                    </Tippy>
+
+                    <Tippy
+                      theme='light'
+                      placement='bottom'
+                      hideOnClick
+                      interactive
+                      trigger='click'
+                      content={<Popup popupData={popupUser} />}
+                    >
+                      <div className='header_nav_item avatar'>
+                        <LazyLoadImage
+                          effect='opacity'
+                          src={images.avatar}
+                          alt='avatar'
+                        />
+                      </div>
+                    </Tippy>
                   </>
                 )}
               </div>
-              <div className='header_nav_item user'>
-                <FontAwesomeIcon icon={faUser} />
-                <div className='header_subnav'>
-                  <Link className='header_subnav_link' to={'/login'}>
-                    Login
-                  </Link>
-                  <Link className='header_subnav_link' to={'/sign-up'}>
-                    Sign Up
-                  </Link>
+              <Tippy
+                theme='light'
+                placement='bottom'
+                hideOnClick
+                interactive
+                trigger='click'
+                content={
+                  <div>
+                    <Link className='header_subnav_link' to={'/login'}>
+                      Login
+                    </Link>
+                    <Link className='header_subnav_link' to={'/sign-up'}>
+                      Sign Up
+                    </Link>
+                  </div>
+                }
+              >
+                <div className='header_nav_item user'>
+                  <FontAwesomeIcon icon={faUser} />
                 </div>
-              </div>
+              </Tippy>
               <div
                 onClick={() => setSearching(!searching)}
                 className='header_nav_item search'
@@ -179,7 +206,6 @@ function Header() {
                   <FontAwesomeIcon
                     onClick={() => {
                       setSearching(true)
-                      handlePopup()
                     }}
                     icon={faSearch}
                   />

@@ -245,5 +245,11 @@ const request = {
     )
     return result.data
   },
+  getCompanyDetails: async companyId => {
+    const result = await mainAxiosClient.get(
+      `company/${companyId}?api_key=${API_KEY}`
+    )
+    return result.data
+  },
 }
 export default request

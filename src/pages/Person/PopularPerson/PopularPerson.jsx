@@ -9,13 +9,15 @@ function PopularPerson() {
   const [page, setPage] = useState(1)
   const [people, setPeople] = useState([])
   const [totalPage, setTotalPage] = useState()
-  const handlePage = item => {
-    if (typeof item === 'string') {
-      return
-    }
+  const handlePage = (event, value) => {
     window.scrollTo(0, 0)
-    setPage(item)
+    setPage(value)
   }
+
+  useEffect(() => {
+    document.title = 'Popular People'
+  }, [])
+
   useEffect(() => {
     const getPopularPeople = async () => {
       const result = await request.getPopularPeople(page)

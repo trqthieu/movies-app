@@ -7,8 +7,7 @@ import {
 } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { Container } from '@mui/material'
-import { useState } from 'react'
-import { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { LazyLoadImage } from 'react-lazy-load-image-component'
 import { Link, useParams } from 'react-router-dom'
 import request from 'src/api/request'
@@ -16,21 +15,20 @@ import images from 'src/assets/images/images'
 import formatCounter from 'src/common/formatCouter'
 import formatDate from 'src/common/formatDate'
 import getImagePath from 'src/common/getImagePath'
-import './Network.scss'
-function Network() {
-  const { networkId } = useParams()
-  const [networkDetails, setNetworkDetails] = useState()
-  const [movieList, setMovieList] = useState([])
-  const [total, setTotal] = useState(0)
+function Company() {
+  const { companyId, type } = useParams()
+  const [company, setCompany] = useState()
   const [filterParams, setFilterParams] = useState({
     page: 1,
     sort_by: 'popularity.desc',
-    with_networks: networkId,
+    with_companies: companyId,
   })
+  const [total, setTotal] = useState(0)
+  const [movieList, setMovieList] = useState([])
 
   const handleLoadMore = () => {
     const newParams = { ...filterParams }
-    newParams.page += 1
+    newParams.page++
     setFilterParams(newParams)
   }
 
@@ -43,60 +41,74 @@ function Network() {
   }
 
   useEffect(() => {
-    const getNetworkDetails = async () => {
-      const network = await request.getNetworkDetails(networkId)
-      document.title = `TV Shows on ${network.name}`
-      setNetworkDetails(network)
+    const getCompany = async () => {
+      const companyResult = await request.getCompanyDetails(companyId)
+      document.title = companyResult.name
+      setCompany(companyResult)
     }
-    getNetworkDetails()
-  }, [networkId])
+    getCompany()
+  }, [companyId])
+
   useEffect(() => {
-    const getMovies = async () => {
-      const resultMovie = await request.getDiscover('tv', filterParams)
-      setTotal(resultMovie.total_results)
-      const newMovieList = [...movieList, ...resultMovie.results]
+    const getDiscover = async () => {
+      const movieResult = await request.getDiscover(type, filterParams)
+      setTotal(movieResult.total_results)
+      const newMovieList = [...movieList, ...movieResult.results]
       setMovieList(newMovieList)
     }
-
-    getMovies()
+    getDiscover()
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [filterParams])
+  }, [type, filterParams])
+
+  useEffect(() => {
+    const newParams = { ...filterParams }
+    newParams.page = 1
+    newParams.sort_by = 'popularity.desc'
+    setFilterParams(newParams)
+    setMovieList([])
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [type])
+
   return (
-    <div className='network_wrapper'>
-      <div className='network_banner_wrapper'>
+    <div className='keyword_wrapper'>
+      <div className='keyword_banner_wrapper'>
         <Container>
-          {networkDetails && (
+          {company && (
             <div className='network_banner'>
               <div className='network_logo'>
-                <div className='network_img'>
-                  <LazyLoadImage
-                    effect='opacity'
-                    src={getImagePath(networkDetails.logo_path)}
-                    alt=''
-                  />
-                </div>
+                {company.logo_path ? (
+                  <div className='network_img'>
+                    <LazyLoadImage
+                      effect='opacity'
+                      src={getImagePath(company.logo_path)}
+                      alt=''
+                    />
+                  </div>
+                ) : (
+                  <h3>{company.name}</h3>
+                )}
+
                 <div>
-                  <h2>{formatCounter(total, 'show')}</h2>
+                  <h2>
+                    {formatCounter(total, type === 'tv' ? 'show' : 'movie')}
+                  </h2>
                 </div>
               </div>
               <div className='network_info'>
                 <div className='network_info_item'>
                   <FontAwesomeIcon icon={faIdBadge} />
-                  <span>{networkDetails.name}</span>
+                  <span>{company.name}</span>
                 </div>
-                {networkDetails.headquarters && (
+                {company.headquarters && (
                   <div className='network_info_item'>
                     <FontAwesomeIcon icon={faLocationDot} />
-                    <span>{networkDetails.headquarters}</span>
+                    <span>{company.headquarters}</span>
                   </div>
                 )}
                 <div className='network_info_item'>
-                  <a
-                    target='_blank'
-                    rel='noreferrer'
-                    href={networkDetails.homepage}
-                  >
+                  <a target='_blank' rel='noreferrer' href={company.homepage}>
                     <FontAwesomeIcon icon={faLink} />
                     <span>Homepage</span>
                   </a>
@@ -110,15 +122,19 @@ function Network() {
         <Container>
           <div className='network_filter'>
             <div className='network_filter_item'>
-              <span>Overview</span>
+              <span>{type === 'tv' ? 'TV Shows' : 'Movies'}</span>
               <FontAwesomeIcon icon={faCaretDown} />
               <div className='header_subnav'>
-                <div className='header_subnav_item'>
-                  <span>Main</span>
-                </div>
-                <div className='header_subnav_item'>
-                  <span>Changes</span>
-                </div>
+                <Link to={`/company/${companyId}/movie`}>
+                  <div className='header_subnav_item'>
+                    <span>Movies</span>
+                  </div>
+                </Link>
+                <Link to={`/company/${companyId}/tv`}>
+                  <div className='header_subnav_item'>
+                    <span>TV Shows</span>
+                  </div>
+                </Link>
               </div>
             </div>
             <div className='network_filter_item'>
@@ -163,17 +179,31 @@ function Network() {
                 </div>
 
                 <div className='header_subnav_item'>
-                  <span>First Air Date</span>
+                  <span>
+                    {type === 'tv' ? 'First Air Date' : 'Release Date'}
+                  </span>
                   <FontAwesomeIcon icon={faCaretRight} />
                   <div className='header_subnav right'>
                     <div
-                      onClick={() => handleSort('first_air_date.asc')}
+                      onClick={() =>
+                        handleSort(
+                          type === 'tv'
+                            ? 'first_air_date.asc'
+                            : 'release_date.asc'
+                        )
+                      }
                       className='header_subnav_item'
                     >
                       <span>Ascending</span>
                     </div>
                     <div
-                      onClick={() => handleSort('first_air_date.desc')}
+                      onClick={() =>
+                        handleSort(
+                          type === 'tv'
+                            ? 'first_air_date.desc'
+                            : 'release_date.desc'
+                        )
+                      }
                       className='header_subnav_item'
                     >
                       <span>Descending</span>
@@ -191,7 +221,7 @@ function Network() {
             <div className='filter_movie_list'>
               {movieList.map((movie, index) => (
                 <div key={index} className='movie_item'>
-                  <Link to={`/tv/${movie.id}`}>
+                  <Link to={`/${type}/${movie.id}`}>
                     <div className='movie_item_img'>
                       <LazyLoadImage
                         effect='opacity'
@@ -206,10 +236,12 @@ function Network() {
                   </Link>
                   <div className='movie_item_info'>
                     <div>
-                      <Link to={`/tv/${movie.id}`}>
-                        <h3>{movie.name}</h3>
+                      <Link to={`/${type}/${movie.id}`}>
+                        <h3>{movie.name || movie.title}</h3>
                       </Link>
-                      <span>{formatDate(movie.first_air_date)}</span>
+                      <span>
+                        {formatDate(movie.first_air_date || movie.release_date)}
+                      </span>
                     </div>
                     <p>{movie.overview}</p>
                   </div>
@@ -230,4 +262,4 @@ function Network() {
   )
 }
 
-export default Network
+export default Company

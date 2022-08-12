@@ -124,6 +124,7 @@ input.parent_checkbox:checked ~ .sub_checkbox {
     background-color: var(--darkBlue);
   }
 }
+
 .button_loadmore {
   border-radius: 8px;
   > *,
@@ -133,5 +134,12 @@ input.parent_checkbox:checked ~ .sub_checkbox {
     &:hover {
       color: var(--darkBlue);
     }
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .filter_wrapper {
+    width: 100%;
+    margin-bottom: 20px;
   }
 }

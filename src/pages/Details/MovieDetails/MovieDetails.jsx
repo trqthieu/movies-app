@@ -18,7 +18,7 @@ import { Link, useLocation, useParams } from 'react-router-dom'
 import request, { IMAGE_PATH } from 'src/api/request'
 import _images from 'src/assets/images/images'
 import formatCurrency from 'src/common/formatCurrency'
-import formatDate from 'src/common/formatDate'
+import formatDate, { getYear } from 'src/common/formatDate'
 import formatLinkImage from 'src/common/formatImageLink'
 import formatText from 'src/common/formatText'
 import formatTime from 'src/common/formatTime'
@@ -46,6 +46,7 @@ function MovieDetails() {
   const [recommendations, setRecommendations] = useState()
   const [keywords, setKeywords] = useState([])
   const [originalLanguage, setOriginalLanguage] = useState()
+
   const handleTrailer = path => {
     setShowTrailer(true)
     setTrailerPath(path)
@@ -64,7 +65,12 @@ function MovieDetails() {
   useEffect(() => {
     const getDetails = async () => {
       const data = await request.getDetails(type, id)
+
       setData(data)
+      document.title = `${data.name || data.title} (${getYear(
+        data.first_air_date || data.release_date
+      )})`
+
       if (data.seasons) {
         setSeasons(data.seasons)
         setCurrentSeason(data.seasons.length - 1)
@@ -135,9 +141,7 @@ function MovieDetails() {
                   </div>
                   <div className='details_banner_desc'>
                     <div className='desc_title'>
-                      <h1 className='name'>
-                        {data.name || data.original_title}
-                      </h1>
+                      <h1 className='name'>{data.name || data.title}</h1>
                       <h3 className='year'>
                         {(data.first_air_date &&
                           `(${data.first_air_date.split('-')[0]})`) ||
@@ -347,7 +351,7 @@ function MovieDetails() {
                             <p>
                               {seasons[currentSeason].overview ||
                                 `${seasons[currentSeason].name} of ${
-                                  data.name || data.original_title
+                                  data.name || data.title
                                 } premiered on ${formatDate(
                                   seasons[currentSeason].air_date
                                 )}.`}
@@ -388,7 +392,8 @@ function MovieDetails() {
                             <div className='review_item'>
                               <div className='review_img'>
                                 <Link to={'/'}>
-                                  <img
+                                  <LazyLoadImage
+                                    effect='opacity'
                                     src={formatLinkImage(
                                       review.author_details.avatar_path
                                     )}
@@ -422,8 +427,8 @@ function MovieDetails() {
                           ) : (
                             <p>
                               We don't have any reviews for{' '}
-                              {data.name || data.original_title}. Would you like
-                              to write one?
+                              {data.name || data.title}. Would you like to write
+                              one?
                             </p>
                           )
                         ) : (
@@ -600,9 +605,7 @@ function MovieDetails() {
                                     </div>
                                   </div>
                                   <div className='item_desc'>
-                                    <span>
-                                      {item.name || item.original_title}
-                                    </span>
+                                    <span>{item.name || item.title}</span>
                                     <span>
                                       {(item.vote_average * 10).toFixed()}%
                                     </span>
@@ -647,7 +650,8 @@ function MovieDetails() {
                           {data.networks.map(network => (
                             <div key={network.id} className='network_img'>
                               <Link to={`/network/${network.id}`}>
-                                <img
+                                <LazyLoadImage
+                                  effect='opacity'
                                   src={`${IMAGE_PATH}${network.logo_path}`}
                                   alt=''
                                 />
@@ -668,17 +672,17 @@ function MovieDetails() {
                         <strong>Original Language</strong>
                         <p>{originalLanguage}</p>
                       </div>
-                      {data.budget && (
-                        <div className='panel'>
-                          <strong>Budget</strong>
-                          <p>{formatCurrency(data.budget)}</p>
-                        </div>
-                      )}
-                      {data.revenue && (
-                        <div className='panel'>
-                          <strong>Revenue</strong>
-                          <p>{formatCurrency(data.revenue)}</p>
-                        </div>
+                      {type === 'movie' && (
+                        <>
+                          <div className='panel'>
+                            <strong>Budget</strong>
+                            <p>{formatCurrency(data.budget)}</p>
+                          </div>
+                          <div className='panel'>
+                            <strong>Revenue</strong>
+                            <p>{formatCurrency(data.revenue)}</p>
+                          </div>
+                        </>
                       )}
 
                       <div className='panel'>
@@ -687,7 +691,7 @@ function MovieDetails() {
                           {keywords.map(keyword => {
                             return (
                               <li key={keyword.id}>
-                                <Link to={`/keyword/${keyword.id}-${type}`}>
+                                <Link to={`/keyword/${keyword.id}/${type}`}>
                                   {keyword.name}
                                 </Link>
                               </li>

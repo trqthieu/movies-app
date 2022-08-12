@@ -1,21 +1,16 @@
-import {
-  faBookBookmark,
-  faBookmark,
-  faHeart,
-  faStar,
-} from '@fortawesome/free-solid-svg-icons'
+import { faBookmark, faHeart, faStar } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import React from 'react'
+import { LazyLoadImage } from 'react-lazy-load-image-component'
 import { IMAGE_PATH } from 'src/api/request'
 import images from 'src/assets/images/images'
 import formatText from 'src/common/formatText'
-import LoadingIcon from 'src/components/LoadingIcon/LoadingIcon'
 import './MovieCard.scss'
 function MovieCard({ movie }) {
   return (
     <div className='movie_card'>
       <div className='movie_img'>
-        <img
+        <LazyLoadImage
+          effect='opacity'
           src={
             movie.poster_path
               ? `${IMAGE_PATH}${movie.poster_path}`
@@ -27,8 +22,8 @@ function MovieCard({ movie }) {
       <div className='movie_info'>
         <div className='info_header'>
           <h3 className='name'>
-            {(movie.original_title && formatText(movie.original_title, 26)) ||
-              (movie.original_name && formatText(movie.original_name, 26))}
+            {(movie.title && formatText(movie.title, 26)) ||
+              (movie.name && formatText(movie.name, 26))}
           </h3>
           <div className='rate'>
             <FontAwesomeIcon icon={faStar} />

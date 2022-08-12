@@ -1,10 +1,10 @@
-import React, { useEffect, useState } from 'react'
-import request from 'src/api/request'
-import './ProvidersSelect.scss'
-import { IMAGE_PATH } from 'src/api/request'
-import Tippy from '@tippyjs/react'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCheck } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import Tippy from '@tippyjs/react'
+import { useEffect, useState } from 'react'
+import { LazyLoadImage } from 'react-lazy-load-image-component'
+import request, { IMAGE_PATH } from 'src/api/request'
+import './ProvidersSelect.scss'
 function ProvidersSelect({ selectedRegion, selectedProvider, handleProvider }) {
   const [providerList, setProviderList] = useState([])
   const handleProviders = id => {
@@ -35,7 +35,11 @@ function ProvidersSelect({ selectedRegion, selectedProvider, handleProvider }) {
               onClick={() => handleProviders(provider.provider_id)}
               className='provider_item'
             >
-              <img src={`${IMAGE_PATH}${provider.logo_path}`} alt='' />
+              <LazyLoadImage
+                effect='opacity'
+                src={`${IMAGE_PATH}${provider.logo_path}`}
+                alt=''
+              />
               {selectedProvider.includes(provider.provider_id) && (
                 <div className='provider_item_overlay'>
                   <FontAwesomeIcon className='icon' icon={faCheck} />

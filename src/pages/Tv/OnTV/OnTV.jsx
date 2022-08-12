@@ -14,6 +14,11 @@ function OnTV() {
   const handleLoadCard = () => {
     setPage(page => page + 1)
   }
+
+  useEffect(() => {
+    document.title = 'Currently Airing Airing Today'
+  }, [])
+
   useEffect(() => {
     const getPopularMovies = async () => {
       const result = await request.getTVOnTheAir(page)
@@ -25,7 +30,6 @@ function OnTV() {
         ...filterParams,
         page,
       })
-      console.log(result.results)
       const newMovieList = [...movieList, ...result.results]
       setMovieList(newMovieList)
     }

@@ -6,7 +6,6 @@ import { LazyLoadImage } from 'react-lazy-load-image-component'
 import getImagePath from 'src/common/getImagePath'
 
 function ImageDisplay({ imageList, backdrops, logos }) {
-  console.log(imageList)
   return (
     <div className='image_list'>
       <Grid container spacing={2}>

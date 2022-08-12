@@ -4,7 +4,7 @@ import React from 'react'
 
 function TrailerPopup({ videoPath, setShowVideo, id }) {
   return (
-    <div>
+    <>
       <div className='video_popup'>
         <div className='custom_bar'>
           <FontAwesomeIcon
@@ -22,8 +22,11 @@ function TrailerPopup({ videoPath, setShowVideo, id }) {
           src={`https://www.youtube.com/embed/${videoPath}?autoplay=1`}
         ></iframe>
       </div>
-      <div className='video_popup_overlay'></div>
-    </div>
+      <div
+        onClick={() => setShowVideo(false)}
+        className='video_popup_overlay'
+      ></div>
+    </>
   )
 }
 

@@ -1,5 +1,5 @@
 import { Container, Grid } from '@mui/material'
-import React from 'react'
+import React, { useEffect } from 'react'
 import Banner from 'src/components/Banner/Banner'
 import Card from 'src/components/Card/Card'
 import Footer from 'src/components/Footer/Footer'
@@ -40,6 +40,9 @@ const leaderboardData = {
   ],
 }
 function Home() {
+  useEffect(() => {
+    document.title = 'Movies App'
+  }, [])
   return (
     <div className='home'>
       <Banner />

@@ -2,6 +2,7 @@ import { faArrowLeft, faPen, faStar } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { Container } from '@mui/material'
 import React, { useEffect, useState } from 'react'
+import { LazyLoadImage } from 'react-lazy-load-image-component'
 import { Link, useLocation, useParams } from 'react-router-dom'
 import request from 'src/api/request'
 import images from 'src/assets/images/images'
@@ -17,7 +18,6 @@ function MovieReviews() {
   const [details, setDetails] = useState()
   const [reviewList, setReviewList] = useState([])
   const [readAll, setReadAll] = useState()
-  console.log(reviewList)
   useEffect(() => {
     const getDetails = async () => {
       const data = await request.getDetails(type, id)
@@ -35,11 +35,15 @@ function MovieReviews() {
           <Container>
             <div className='movie_header'>
               <div className='movie_img'>
-                <img src={getImagePath(details.poster_path)} alt='' />
+                <LazyLoadImage
+                  effect='opacity'
+                  src={getImagePath(details.poster_path)}
+                  alt=''
+                />
               </div>
               <div className='movie_right'>
                 <h1>
-                  {details.name || details.original_title}{' '}
+                  {details.name || details.title}{' '}
                   <span>
                     ({getYear(details.first_air_date || details.release_date)})
                   </span>
@@ -61,7 +65,8 @@ function MovieReviews() {
                 <div key={review.id} className='review_item'>
                   <div className='review_img'>
                     <Link to={'/'}>
-                      <img
+                      <LazyLoadImage
+                        effect='opacity'
                         src={
                           review.author_details.avatar_path
                             ? formatLinkImage(review.author_details.avatar_path)

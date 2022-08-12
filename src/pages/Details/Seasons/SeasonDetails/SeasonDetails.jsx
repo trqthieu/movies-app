@@ -6,6 +6,7 @@ import {
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { Container } from '@mui/material'
 import { useEffect, useState } from 'react'
+import { LazyLoadImage } from 'react-lazy-load-image-component'
 import { Link, useParams } from 'react-router-dom'
 import request from 'src/api/request'
 import formatDate, { getYear } from 'src/common/formatDate'
@@ -19,7 +20,6 @@ function SeasonDetails() {
   const [seasonIndex, setSeasonIndex] = useState(0)
   const [seasonDetails, setSeasonDetails] = useState()
 
-  console.log(seasonDetails)
   const logicPagination = (seasonList, currentSeason) => {
     return seasonList.findIndex(
       element => element.season_number === currentSeason - 0
@@ -28,6 +28,7 @@ function SeasonDetails() {
   useEffect(() => {
     const getDetails = async () => {
       const details = await request.getDetails('tv', TVId)
+
       setSeasonList(details.seasons)
       const currentIndex = logicPagination(details.seasons, seasonNumber)
       setSeasonIndex(currentIndex)
@@ -45,7 +46,11 @@ function SeasonDetails() {
           <Container>
             <div className='movie_header'>
               <div className='movie_img'>
-                <img src={getImagePath(seasonDetails.poster_path)} alt='' />
+                <LazyLoadImage
+                  effect='opacity'
+                  src={getImagePath(seasonDetails.poster_path)}
+                  alt=''
+                />
               </div>
               <div className='movie_right'>
                 <h1>
@@ -112,7 +117,11 @@ function SeasonDetails() {
                   <div key={episode.id} className='episode_item_wrapper'>
                     <div className='episode_item'>
                       <div className='episode_item_img'>
-                        <img src={getImagePath(episode.still_path)} alt='' />
+                        <LazyLoadImage
+                          effect='opacity'
+                          src={getImagePath(episode.still_path)}
+                          alt=''
+                        />
                       </div>
                       <div className='episode_item_info'>
                         <div className='title'>
@@ -124,7 +133,11 @@ function SeasonDetails() {
                             <span>{formatTime(episode.runtime)}</span>
                           </p>
                         </div>
-                        <p>{episode.overview}</p>
+                        <p>
+                          {episode.overview
+                            ? episode.overview
+                            : "We don't have an overview translated in English"}
+                        </p>
                       </div>
                     </div>
                   </div>

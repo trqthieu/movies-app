@@ -14,9 +14,7 @@ function PersonCard({ person }) {
     }
     return images.malePerson
   }
-  const knowFor = known_for
-    .map(item => item.original_title || item.name)
-    .join(', ')
+  const knowFor = known_for.map(item => item.title || item.name).join(', ')
   return (
     <div className='person_card'>
       <Link to={`/person/${id}`}>

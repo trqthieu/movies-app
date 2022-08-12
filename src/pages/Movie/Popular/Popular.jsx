@@ -17,6 +17,10 @@ function Popular() {
     setPage(page => page + 1)
   }
   useEffect(() => {
+    document.title = 'Popular Movies'
+  }, [])
+
+  useEffect(() => {
     const getPopularMovies = async () => {
       const result = await request.getPopular('movie', page)
       const newMovieList = [...movieList, ...result]

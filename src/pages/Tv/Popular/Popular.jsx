@@ -14,6 +14,11 @@ function Popular() {
   const handleLoadCard = () => {
     setPage(page => page + 1)
   }
+
+  useEffect(() => {
+    document.title = 'Popular TV Shows'
+  }, [])
+
   useEffect(() => {
     const getPopularMovies = async () => {
       const result = await request.getPopular('tv', page)
@@ -25,7 +30,6 @@ function Popular() {
         ...filterParams,
         page,
       })
-      console.log(result.results)
       const newMovieList = [...movieList, ...result.results]
       setMovieList(newMovieList)
     }

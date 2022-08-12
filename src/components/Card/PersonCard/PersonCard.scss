@@ -4,6 +4,8 @@
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  border-radius: 8px;
+  overflow: hidden;
 
   .person_card_img {
     height: 100%;

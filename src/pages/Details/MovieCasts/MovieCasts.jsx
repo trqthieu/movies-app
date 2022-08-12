@@ -3,6 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { Container, Grid } from '@mui/material'
 import { useState } from 'react'
 import { useEffect } from 'react'
+import { LazyLoadImage } from 'react-lazy-load-image-component'
 import { Link, useLocation, useParams } from 'react-router-dom'
 import request from 'src/api/request'
 import { getYear } from 'src/common/formatDate'
@@ -15,7 +16,6 @@ function MovieCasts() {
   const location = useLocation()
   const type = location.pathname.split('/')[1]
   const [details, setDetails] = useState()
-  console.log(details)
   const [credits, setCredits] = useState()
   const [crewType, setCrewType] = useState([])
   useEffect(() => {
@@ -43,11 +43,15 @@ function MovieCasts() {
           <Container>
             <div className='movie_header'>
               <div className='movie_img'>
-                <img src={getImagePath(details.poster_path)} alt='' />
+                <LazyLoadImage
+                  effect='opacity'
+                  src={getImagePath(details.poster_path)}
+                  alt=''
+                />
               </div>
               <div className='movie_right'>
                 <h1>
-                  {details.name || details.original_title}{' '}
+                  {details.name || details.title}{' '}
                   <span>
                     ({getYear(details.first_air_date || details.release_date)})
                   </span>

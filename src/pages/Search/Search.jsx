@@ -28,11 +28,11 @@ const searchFilter = [
     text: 'People',
     count: 0,
   },
-  {
-    type: 'collection',
-    text: 'Collections',
-    count: 0,
-  },
+  //   {
+  //     type: 'collection',
+  //     text: 'Collections',
+  //     count: 0,
+  //   },
   {
     type: 'company',
     text: 'Companies',
@@ -46,13 +46,14 @@ const searchFilter = [
 ]
 
 function Search() {
-  const { query } = useParams()
+  const { type, query } = useParams()
   const [displayType, setDisplayType] = useState(searchFilter)
-  const [selectedType, setSelectedType] = useState(searchFilter[0])
+  const [selectedType, setSelectedType] = useState(() =>
+    searchFilter.find(search => search.type === type)
+  )
   const [totalPage, setTotalPage] = useState(1)
   const [currentPage, setCurrentPage] = useState(1)
   const [movieList, setMovieList] = useState([])
-  console.log(movieList)
 
   const handlePage = (event, value) => {
     setCurrentPage(value)
@@ -73,6 +74,7 @@ function Search() {
   }, [selectedType, query, currentPage])
 
   useEffect(() => {
+    document.title = `${query} - Movies App`
     const promiseList = displayType.map(typeItem => {
       return request.getSearchResults(typeItem.type, query, 1)
     })
@@ -125,7 +127,7 @@ function Search() {
                       <div className='movie_item_info'>
                         <div>
                           <Link to={`/${selectedType.type}/${movie.id}`}>
-                            <h3>{movie.name || movie.original_title}</h3>
+                            <h3>{movie.name || movie.title}</h3>
                           </Link>
                           {selectedType.type !== 'collection' && (
                             <span>
@@ -141,8 +143,8 @@ function Search() {
                   ))}
                 {selectedType.type === 'person' &&
                   movieList.map(person => (
-                    <div className='person_item'>
-                      <div key={person.id} class='person_img'>
+                    <div key={person.id} className='person_item'>
+                      <div className='person_img'>
                         <LazyLoadImage
                           effect='blur'
                           src={
@@ -155,7 +157,7 @@ function Search() {
                           alt=''
                         />
                       </div>
-                      <div class='person_info'>
+                      <div className='person_info'>
                         <Link to={`/person/${person.id}`}>
                           <strong>{person.name}</strong>
                         </Link>
@@ -167,7 +169,7 @@ function Search() {
                                 to={`/${known.media_type}/${known.id}`}
                                 key={known.id}
                               >
-                                {known.original_title || known.original_name}
+                                {known.title || known.name}
                                 {index === person.known_for.length - 1
                                   ? ''
                                   : ', '}
@@ -181,7 +183,7 @@ function Search() {
                   <div className='company_list'>
                     {movieList.map(company => (
                       <div key={company.id} className='company_item'>
-                        <Link to={`/company/${company.id}`}>
+                        <Link to={`/company/${company.id}/movie`}>
                           {company.name}
                         </Link>
                         <div className='company_img'>
@@ -199,7 +201,7 @@ function Search() {
                   <div className='keyword_list'>
                     {movieList.map(keyword => (
                       <div key={keyword.id} className='keyword_item'>
-                        <Link to={`/keyword/${keyword.id}`}>
+                        <Link to={`/keyword/${keyword.id}/movie`}>
                           {keyword.name}
                         </Link>
                       </div>

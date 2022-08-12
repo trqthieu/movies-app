@@ -2,6 +2,7 @@ import { faCaretDown, faCaretRight } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { Container } from '@mui/material'
 import React, { useEffect, useState } from 'react'
+import { LazyLoadImage } from 'react-lazy-load-image-component'
 import { Link, useParams } from 'react-router-dom'
 import request from 'src/api/request'
 import images from 'src/assets/images/images'
@@ -19,9 +20,6 @@ function Keyword() {
   })
   const [total, setTotal] = useState(0)
   const [movieList, setMovieList] = useState([])
-  console.log(type)
-  console.log(filterParams)
-  console.log(movieList)
 
   const handleLoadMore = () => {
     const newParams = { ...filterParams }
@@ -40,10 +38,13 @@ function Keyword() {
   useEffect(() => {
     const getKeyword = async () => {
       const keywordResult = await request.getKeywordDetails(keywordId)
+      document.title = `"${keywordResult.name}" ${
+        type === 'tv' ? 'TV Shows' : 'Movies'
+      }`
       setKeyword(keywordResult)
     }
     getKeyword()
-  }, [keywordId])
+  }, [keywordId, type])
 
   useEffect(() => {
     const getDiscover = async () => {
@@ -86,12 +87,12 @@ function Keyword() {
               <span>{type === 'tv' ? 'TV Shows' : 'Movies'}</span>
               <FontAwesomeIcon icon={faCaretDown} />
               <div className='header_subnav'>
-                <Link to={`/keyword/${keywordId}-movie`}>
+                <Link to={`/keyword/${keywordId}/movie`}>
                   <div className='header_subnav_item'>
                     <span>Movies</span>
                   </div>
                 </Link>
-                <Link to={`/keyword/${keywordId}-tv`}>
+                <Link to={`/keyword/${keywordId}/tv`}>
                   <div className='header_subnav_item'>
                     <span>TV Shows</span>
                   </div>
@@ -184,7 +185,8 @@ function Keyword() {
                 <div key={index} className='movie_item'>
                   <Link to={`/${type}/${movie.id}`}>
                     <div className='movie_item_img'>
-                      <img
+                      <LazyLoadImage
+                        effect='opacity'
                         src={
                           movie.poster_path
                             ? getImagePath(movie.poster_path)
@@ -197,7 +199,7 @@ function Keyword() {
                   <div className='movie_item_info'>
                     <div>
                       <Link to={`/${type}/${movie.id}`}>
-                        <h3>{movie.name || movie.original_title}</h3>
+                        <h3>{movie.name || movie.title}</h3>
                       </Link>
                       <span>
                         {formatDate(movie.first_air_date || movie.release_date)}

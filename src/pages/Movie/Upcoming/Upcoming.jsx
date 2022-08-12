@@ -14,6 +14,11 @@ function Upcoming() {
   const handleLoadCard = () => {
     setPage(page => page + 1)
   }
+
+  useEffect(() => {
+    document.title = 'Upcoming Movies'
+  }, [])
+
   useEffect(() => {
     const getPopularMovies = async () => {
       const result = await request.getMoviesUpcoming(page)
@@ -25,7 +30,6 @@ function Upcoming() {
         ...filterParams,
         page,
       })
-      console.log(result.results)
       const newMovieList = [...movieList, ...result.results]
       setMovieList(newMovieList)
     }

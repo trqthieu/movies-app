@@ -14,6 +14,11 @@ function NowPlaying() {
   const handleLoadCard = () => {
     setPage(page => page + 1)
   }
+
+  useEffect(() => {
+    document.title = 'Now Playing Movies'
+  }, [])
+
   useEffect(() => {
     const getPopularMovies = async () => {
       const result = await request.getMoviesPlaying(page)
@@ -25,7 +30,6 @@ function NowPlaying() {
         ...filterParams,
         page,
       })
-      console.log(result.results)
       const newMovieList = [...movieList, ...result.results]
       setMovieList(newMovieList)
     }

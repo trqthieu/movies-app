@@ -1,5 +1,5 @@
 import { Container, Grid } from '@mui/material'
-import React from 'react'
+import { LazyLoadImage } from 'react-lazy-load-image-component'
 import { Link } from 'react-router-dom'
 import images from 'src/assets/images/images'
 import './Footer.scss'
@@ -93,7 +93,14 @@ function Footer() {
           <Grid item lg={3}>
             <Grid container spacing={2} className='justify-content-center'>
               <Grid item>
-                <img className='img' src={images.logo2} alt='logo' />
+                <div className='logo_img'>
+                  <LazyLoadImage
+                    effect='opacity'
+                    className='img'
+                    src={images.logo2}
+                    alt='logo'
+                  />
+                </div>
               </Grid>
               <Grid item>
                 <button>

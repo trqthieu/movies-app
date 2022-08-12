@@ -73,6 +73,7 @@ function PersonDetails() {
   useEffect(() => {
     const getDetails = async () => {
       const detailsResult = await request.getPersonDetails(id)
+      document.title = detailsResult.name
       setDetails(detailsResult)
       setBio(formatText(detailsResult.biography, 1000))
       if (detailsResult.biography.length > 1000) {
@@ -135,15 +136,30 @@ function PersonDetails() {
                     />
                   </div>
                   <div className='person_info'>
+                    <h1 className='person_name_mobile'>
+                      {details && details.name}
+                    </h1>
                     <div className='person_social'>
                       <Link to={'/'}>
-                        <img src={icons.facebookIcon} alt='' />
+                        <LazyLoadImage
+                          effect='opacity'
+                          src={icons.facebookIcon}
+                          alt=''
+                        />
                       </Link>
                       <Link to={'/'}>
-                        <img src={icons.twitterIcon} alt='' />
+                        <LazyLoadImage
+                          effect='opacity'
+                          src={icons.twitterIcon}
+                          alt=''
+                        />
                       </Link>
                       <Link to={'/'}>
-                        <img src={icons.instagramIcon} alt='' />
+                        <LazyLoadImage
+                          effect='opacity'
+                          src={icons.instagramIcon}
+                          alt=''
+                        />
                       </Link>
                     </div>
                     <h3>Personal Info</h3>
@@ -228,7 +244,7 @@ function PersonDetails() {
                               alt=''
                             />
                           </div>
-                          <p>{movie.original_title || movie.original_name}</p>
+                          <p>{movie.title || movie.name}</p>
                         </Link>
                       </div>
                     ))}
@@ -307,10 +323,7 @@ function PersonDetails() {
 
                                 <span className='movie_name'>
                                   <Link to={`/${cast.media_type}/${cast.id}`}>
-                                    <strong>
-                                      {cast.original_title ||
-                                        cast.original_name}
-                                    </strong>
+                                    <strong>{cast.title || cast.name}</strong>
                                   </Link>
                                   {cast.character && (
                                     <>
@@ -378,10 +391,7 @@ function PersonDetails() {
 
                                 <span className='movie_name'>
                                   <Link to={`/${crew.media_type}/${crew.id}`}>
-                                    <strong>
-                                      {crew.original_title ||
-                                        crew.original_name}
-                                    </strong>
+                                    <strong>{crew.title || crew.name}</strong>
                                   </Link>
                                   <span>&nbsp;</span>
                                   <span
@@ -440,10 +450,7 @@ function PersonDetails() {
 
                                 <span className='movie_name'>
                                   <Link to={`/${crew.media_type}/${crew.id}`}>
-                                    <strong>
-                                      {crew.original_title ||
-                                        crew.original_name}
-                                    </strong>
+                                    <strong>{crew.title || crew.name}</strong>
                                   </Link>
                                   <span>&nbsp;</span>
                                   <span
@@ -501,10 +508,7 @@ function PersonDetails() {
 
                                 <span className='movie_name'>
                                   <Link to={`/${crew.media_type}/${crew.id}`}>
-                                    <strong>
-                                      {crew.original_title ||
-                                        crew.original_name}
-                                    </strong>
+                                    <strong>{crew.title || crew.name}</strong>
                                   </Link>
                                   <span>&nbsp;</span>
                                   <span
@@ -562,10 +566,7 @@ function PersonDetails() {
 
                                 <span className='movie_name'>
                                   <Link to={`/${crew.media_type}/${crew.id}`}>
-                                    <strong>
-                                      {crew.original_title ||
-                                        crew.original_name}
-                                    </strong>
+                                    <strong>{crew.title || crew.name}</strong>
                                   </Link>
                                   <span>&nbsp;</span>
                                   <span
@@ -623,10 +624,7 @@ function PersonDetails() {
 
                                 <span className='movie_name'>
                                   <Link to={`/${crew.media_type}/${crew.id}`}>
-                                    <strong>
-                                      {crew.original_title ||
-                                        crew.original_name}
-                                    </strong>
+                                    <strong>{crew.title || crew.name}</strong>
                                   </Link>
                                   <span>&nbsp;</span>
                                   <span

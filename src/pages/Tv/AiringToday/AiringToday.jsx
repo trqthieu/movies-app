@@ -14,6 +14,11 @@ function AiringToday() {
   const handleLoadCard = () => {
     setPage(page => page + 1)
   }
+
+  useEffect(() => {
+    document.title = 'TV Shows Airing Today'
+  }, [])
+
   useEffect(() => {
     const getPopularMovies = async () => {
       const result = await request.getTVAiringToday(page)
@@ -25,7 +30,6 @@ function AiringToday() {
         ...filterParams,
         page,
       })
-      console.log(result.results)
       const newMovieList = [...movieList, ...result.results]
       setMovieList(newMovieList)
     }

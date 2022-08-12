@@ -21,16 +21,24 @@
   }
 }
 .person_social {
+  a {
+    width: 30px;
+  }
   display: flex;
   margin-bottom: 30px;
   img {
-    width: 30px;
     margin-right: 10px;
   }
 }
 .person_name {
   font-weight: 700;
   font-size: 3.5rem;
+}
+.person_name_mobile {
+  display: none;
+  font-weight: 700;
+  font-size: 3.5rem;
+  margin-bottom: 10px;
 }
 .biography {
   //   height: 220px;
@@ -72,6 +80,7 @@
       box-shadow: 0 2px 8px rgb(0 0 0 / 10%);
     }
     p {
+      margin-top: 4px;
       font-size: 1.4rem;
       text-align: center;
       white-space: nowrap;
@@ -174,5 +183,18 @@
     }
     display: flex;
     align-items: center;
+    flex-wrap: wrap;
+  }
+}
+@media screen and (max-width: 900px) {
+  .person_name {
+    display: none;
+  }
+  .person_name_mobile {
+    text-align: center;
+    display: block;
+  }
+  .person_social {
+    justify-content: center;
   }
 }

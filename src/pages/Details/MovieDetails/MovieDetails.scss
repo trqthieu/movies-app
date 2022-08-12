@@ -282,11 +282,12 @@
   display: flex;
 }
 .review_img {
+  width: 64px;
+  min-width: 64px;
+  height: 64px;
   margin-right: 20px;
   img {
     border-radius: 50%;
-    width: 64px;
-    height: 64px;
   }
 }
 .review_title {
@@ -302,6 +303,9 @@
     padding: 1px 8px;
     background-color: #000;
     font-size: 1.4rem;
+    display: flex;
+    height: max-content;
+    align-items: center;
     span {
       margin-left: 6px;
     }
@@ -475,6 +479,7 @@
     margin-bottom: 0;
   }
   .network_img {
+    display: flex;
     img {
       height: 30px;
     }
@@ -505,6 +510,34 @@
     padding-left: 10px;
     p {
       font-weight: 600;
+    }
+  }
+}
+
+@media screen and (max-width: 900px) {
+  .details_banner {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .details_banner_desc {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding-left: 0;
+    margin-top: 20px;
+  }
+  .desc_actions {
+    flex-direction: column;
+  }
+  .desc_actions .interact {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    margin-top: 10px;
+    .interact_item {
+      margin-right: 10px;
+      margin-left: 0;
     }
   }
 }

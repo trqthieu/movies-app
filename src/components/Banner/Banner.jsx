@@ -1,14 +1,12 @@
 import { Container } from '@mui/material'
 import { useRef, useState } from 'react'
-import request from 'src/api/request'
+import { useNavigate } from 'react-router-dom'
 import './Banner.scss'
 function Banner() {
+  const navigate = useNavigate()
   const inputRef = useRef()
   const [input, setInput] = useState('')
-  const getSearchResults = async value => {
-    const result = await request.getMovies(value)
-    console.log(result)
-  }
+
   const handleInput = e => {
     const value = e.target.value
     if (value.startsWith(' ')) {
@@ -20,8 +18,7 @@ function Banner() {
   const handleSubmit = e => {
     e.preventDefault()
     if (input.length > 0) {
-      getSearchResults(input)
-      //navigate to search page
+      navigate(`/search/movie/${input}`)
       return
     }
     inputRef.current.focus()

@@ -31,3 +31,16 @@
     }
   }
 }
+@media screen and (max-width: 600px) {
+  .all_wrapper .heading {
+    margin-bottom: 0;
+  }
+  .content_wrapper {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .all_wrapper .content_wrapper .content {
+    padding-left: 0;
+  }
+}

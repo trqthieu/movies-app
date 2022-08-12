@@ -14,6 +14,11 @@ function TopRated() {
   const handleLoadCard = () => {
     setPage(page => page + 1)
   }
+
+  useEffect(() => {
+    document.title = 'Top Rated Movies'
+  }, [])
+
   useEffect(() => {
     const getPopularMovies = async () => {
       const result = await request.getTopRated('movie', page)
@@ -25,7 +30,6 @@ function TopRated() {
         ...filterParams,
         page,
       })
-      console.log(result.results)
       const newMovieList = [...movieList, ...result.results]
       setMovieList(newMovieList)
     }

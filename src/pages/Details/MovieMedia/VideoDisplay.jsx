@@ -5,7 +5,6 @@ import formatDate from 'src/common/formatDate'
 import TrailerPopup from 'src/components/TrailerPopup/TrailerPopup'
 
 function VideoDisplay({ videoList }) {
-  console.log(videoList)
   const [showVideo, setShowVideo] = useState(false)
   return (
     <div className='video_list'>

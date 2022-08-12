@@ -1,4 +1,5 @@
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
+import { LazyLoadImage } from 'react-lazy-load-image-component'
 import { Link } from 'react-router-dom'
 import request from 'src/api/request'
 import images from 'src/assets/images/images'
@@ -16,7 +17,8 @@ function PersonCast({ cast, intro }) {
   return (
     <div key={cast.id} className={intro ? 'cast_person intro' : 'cast_person'}>
       <div className='cast_img'>
-        <img
+        <LazyLoadImage
+          effect='opacity'
           src={
             cast.profile_path
               ? getImagePath(cast.profile_path)

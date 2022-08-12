@@ -7,9 +7,10 @@
   padding: 4px 0;
   border-top: 1px solid #ccc;
   & a {
+    font-weight: 600;
     padding: 6px 20px;
     display: block;
-    font-size: 1.4rem;
+    font-size: 1.44rem;
     text-decoration: none;
     color: rgba(0, 0, 0, 0.6);
     &:hover {
@@ -23,6 +24,8 @@
   }
 }
 .popup_group.user {
+  font-size: 1.6rem;
+  font-weight: 600;
   border: none;
   padding: 16px 0;
   & .user_name {

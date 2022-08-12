@@ -1,3 +1,4 @@
+import Company from 'src/pages/Company/Company'
 import Details from 'src/pages/Details/Details'
 import MovieCasts from 'src/pages/Details/MovieCasts/MovieCasts'
 import MovieDetails from 'src/pages/Details/MovieDetails/MovieDetails'
@@ -27,9 +28,10 @@ export const routesConfig = {
   movie: '/movie/*',
   tv: '/tv/*',
   person: '/person/*',
-  keyword: '/keyword/:keywordId-:type',
+  keyword: '/keyword/:keywordId/:type',
   network: '/network/:networkId',
-  search: '/search/:query',
+  search: '/search/:type/:query',
+  company: '/company/:companyId/:type',
 }
 const routesPath = [
   {
@@ -59,6 +61,10 @@ const routesPath = [
   {
     path: routesConfig.search,
     element: <Search />,
+  },
+  {
+    path: routesConfig.company,
+    element: <Company />,
   },
 ]
 export const moviePaths = {

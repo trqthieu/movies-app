@@ -9,18 +9,27 @@ import {
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { Container } from '@mui/material'
 import React, { useEffect, useRef, useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import request from 'src/api/request'
 import useDebounce from 'src/hooks/useDebounce'
 import './SearchBar.scss'
 function SearchBar({ setSearching }) {
+  const navigate = useNavigate()
   const inputRef = useRef()
   const [searchResults, setSearchResults] = useState([])
-  console.log(searchResults)
   const [input, setInput] = useState('')
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState()
-  const debounce = useDebounce(input, 500)
+  const debounce = useDebounce(input, 200)
+
+  const handleSubmit = e => {
+    e.preventDefault()
+    if (input.length > 0) {
+      navigate(`search/movie/${input}`)
+      setSearching(false)
+    }
+  }
+
   const handleInput = e => {
     const value = e.target.value
     if (value.startsWith(' ')) {
@@ -55,7 +64,7 @@ function SearchBar({ setSearching }) {
     <div className='search_wrapper'>
       <div className='search_form_wrapper'>
         <Container>
-          <div className='search_form'>
+          <form onSubmit={handleSubmit} className='search_form'>
             <div className='search_form_icon'>
               <FontAwesomeIcon icon={faSearch} />
             </div>
@@ -80,7 +89,7 @@ function SearchBar({ setSearching }) {
               )}
               {loading && <div className='loading_icon'></div>}
             </div>
-          </div>
+          </form>
         </Container>
       </div>
       {searchResults.length > 0 && input && (
@@ -111,10 +120,12 @@ function SearchBar({ setSearching }) {
                     />
                     <Link
                       onClick={() => setSearching(false)}
-                      to={`/${searchResult.media_type}/${searchResult.id}`}
+                      to={`/search/${searchResult.media_type}/${
+                        searchResult.name || searchResult.title
+                      }`}
                     >
                       <p className='text'>
-                        {searchResult.name || searchResult.original_title}
+                        {searchResult.name || searchResult.title}
                       </p>
                     </Link>
                   </div>

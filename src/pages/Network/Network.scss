@@ -20,15 +20,21 @@
     font-weight: 600;
     color: #fff;
   }
-}
-.network_img {
-  max-height: 50px;
-  margin: 0;
-  width: 50%;
-  img {
-    height: 100%;
+  h3 {
+    font-size: 3.2rem;
+    font-weight: 700;
+    color: #fff;
+  }
+  .network_img {
+    height: 50px;
+    margin: 0;
+    display: inline-flex;
+    img {
+      height: 100%;
+    }
   }
 }
+
 .network_info {
   display: flex;
 }

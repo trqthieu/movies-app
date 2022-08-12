@@ -2,6 +2,7 @@ import { faArrowLeft } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { Container } from '@mui/material'
 import { useEffect, useState } from 'react'
+import { LazyLoadImage } from 'react-lazy-load-image-component'
 import { Link, useParams } from 'react-router-dom'
 import request from 'src/api/request'
 import images from 'src/assets/images/images'
@@ -28,11 +29,15 @@ function MovieSeasons() {
             <Container>
               <div className='movie_header'>
                 <div className='movie_img'>
-                  <img src={getImagePath(details.poster_path)} alt='' />
+                  <LazyLoadImage
+                    effect='opacity'
+                    src={getImagePath(details.poster_path)}
+                    alt=''
+                  />
                 </div>
                 <div className='movie_right'>
                   <h1>
-                    {details.name || details.original_title}{' '}
+                    {details.name || details.title}{' '}
                     <span>
                       ({getYear(details.first_air_date || details.release_date)}
                       )
@@ -53,7 +58,8 @@ function MovieSeasons() {
                   <Container>
                     <div className='season_item'>
                       <div className='season_item_img'>
-                        <img
+                        <LazyLoadImage
+                          effect='opacity'
                           src={
                             season.poster_path
                               ? getImagePath(season.poster_path)

@@ -32,11 +32,11 @@ a * {
   text-decoration: none;
 }
 html {
+  scroll-behavior: smooth;
   font-size: 62.5%;
 }
 body {
   font-family: 'Source Sans Pro', sans-serif;
-  scroll-behavior: smooth;
   font-size: 1.6rem;
 }
 ::-webkit-scrollbar {
