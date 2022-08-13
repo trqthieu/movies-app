@@ -7,12 +7,14 @@ import MovieReviews from 'src/pages/Details/MovieReviews/MovieReviews'
 import Seasons from 'src/pages/Details/Seasons/Seasons'
 import Home from 'src/pages/Home/Home.jsx'
 import Keyword from 'src/pages/Keyword/Keyword'
+import Login from 'src/pages/Login/Login'
 import Movie from 'src/pages/Movie/Movie.jsx'
 import NowPlaying from 'src/pages/Movie/NowPlaying/NowPlaying'
 import Popular from 'src/pages/Movie/Popular/Popular'
 import TopRated from 'src/pages/Movie/TopRated/TopRated'
 import Upcoming from 'src/pages/Movie/Upcoming/Upcoming'
 import Network from 'src/pages/Network/Network'
+import NotMatch from 'src/pages/NotMatch/NotMatch'
 import Person from 'src/pages/Person/Person.jsx'
 import PersonDetails from 'src/pages/Person/PersonDetails/PersonDetails'
 import PopularPerson from 'src/pages/Person/PopularPerson/PopularPerson'
@@ -32,6 +34,8 @@ export const routesConfig = {
   network: '/network/:networkId',
   search: '/search/:type/:query',
   company: '/company/:companyId/:type',
+  login: '/login',
+  notMatch: '*',
 }
 const routesPath = [
   {
@@ -65,6 +69,14 @@ const routesPath = [
   {
     path: routesConfig.company,
     element: <Company />,
+  },
+  {
+    path: routesConfig.login,
+    element: <Login />,
+  },
+  {
+    path: routesConfig.notMatch,
+    element: <NotMatch />,
   },
 ]
 export const moviePaths = {

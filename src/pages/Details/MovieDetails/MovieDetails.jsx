@@ -14,7 +14,7 @@ import Tippy from '@tippyjs/react'
 import { useEffect, useState } from 'react'
 import { LazyLoadImage } from 'react-lazy-load-image-component'
 import 'react-lazy-load-image-component/src/effects/opacity.css'
-import { Link, useLocation, useParams } from 'react-router-dom'
+import { Link, useLocation, useNavigate, useParams } from 'react-router-dom'
 import request, { IMAGE_PATH } from 'src/api/request'
 import _images from 'src/assets/images/images'
 import formatCurrency from 'src/common/formatCurrency'
@@ -27,6 +27,7 @@ import PersonCast from 'src/components/Card/PersonCast/PersonCast'
 import TrailerPopup from 'src/components/TrailerPopup/TrailerPopup'
 import './MovieDetails.scss'
 function MovieDetails() {
+  const navigate = useNavigate()
   const location = useLocation()
   const { id } = useParams()
   const type = location.pathname.split('/')[1]
@@ -64,16 +65,20 @@ function MovieDetails() {
 
   useEffect(() => {
     const getDetails = async () => {
-      const data = await request.getDetails(type, id)
+      try {
+        const data = await request.getDetails(type, id)
 
-      setData(data)
-      document.title = `${data.name || data.title} (${getYear(
-        data.first_air_date || data.release_date
-      )})`
+        setData(data)
+        document.title = `${data.name || data.title} (${getYear(
+          data.first_air_date || data.release_date
+        )})`
 
-      if (data.seasons) {
-        setSeasons(data.seasons)
-        setCurrentSeason(data.seasons.length - 1)
+        if (data.seasons) {
+          setSeasons(data.seasons)
+          setCurrentSeason(data.seasons.length - 1)
+        }
+      } catch (error) {
+        navigate('/error')
       }
     }
     const getCredits = async () => {

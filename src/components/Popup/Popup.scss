@@ -6,7 +6,8 @@
 .popup_group {
   padding: 4px 0;
   border-top: 1px solid #ccc;
-  & a {
+  & a,
+  button {
     font-weight: 600;
     padding: 6px 20px;
     display: block;
@@ -40,4 +41,10 @@
       background-color: #fff;
     }
   }
+}
+.popup_group button {
+  border: none;
+  width: 100%;
+  background-color: #fff;
+  text-align: left;
 }

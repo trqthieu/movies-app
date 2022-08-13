@@ -282,11 +282,11 @@
   display: flex;
 }
 .review_img {
-  width: 64px;
-  min-width: 64px;
-  height: 64px;
   margin-right: 20px;
   img {
+    width: 64px;
+    min-width: 64px;
+    height: 64px;
     border-radius: 50%;
   }
 }

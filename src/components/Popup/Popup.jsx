@@ -2,15 +2,15 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import './Popup.scss'
 
-function Popup({ popupData }) {
+function Popup({ popupData, login, handleLogout }) {
   const { heading, groups } = popupData
   return (
     <div className='popup_wrapper popup'>
       {heading && (
         <div className='popup_group user'>
-          <p className='user_name'>{heading.title}</p>
-          <Link className='link_profile' to={heading.link.path}>
-            {heading.link.text}
+          <p className='user_name'>{login.user.displayName}</p>
+          <Link className='link_profile' to={heading.path}>
+            {heading.text}
           </Link>
         </div>
       )}
@@ -27,6 +27,11 @@ function Popup({ popupData }) {
           </div>
         )
       })}
+      {login && (
+        <div onClick={handleLogout} className='popup_group'>
+          <button>Logout</button>
+        </div>
+      )}
     </div>
   )
 }

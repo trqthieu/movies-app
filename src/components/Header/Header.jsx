@@ -26,7 +26,14 @@ import './Header.scss'
 function Header() {
   const [searching, setSearching] = useState(false)
   const [mobileNav, setMobileNav] = useState([])
-  const [login, setLogin] = useState(false)
+  const [login, setLogin] = useState(() => {
+    const userAuth = JSON.parse(localStorage.getItem('userAuth'))
+    return userAuth
+  })
+  const handleLogout = () => {
+    localStorage.removeItem('userAuth')
+    window.location.reload()
+  }
   const handleMobileNav = index => {
     let newMobileNav = [...mobileNav]
     if (!newMobileNav.includes(index)) {
@@ -164,12 +171,18 @@ function Header() {
                       hideOnClick
                       interactive
                       trigger='click'
-                      content={<Popup popupData={popupUser} />}
+                      content={
+                        <Popup
+                          popupData={popupUser}
+                          login={login}
+                          handleLogout={handleLogout}
+                        />
+                      }
                     >
                       <div className='header_nav_item avatar'>
                         <LazyLoadImage
                           effect='opacity'
-                          src={images.avatar}
+                          src={login.user.photoURL}
                           alt='avatar'
                         />
                       </div>
@@ -184,18 +197,30 @@ function Header() {
                 interactive
                 trigger='click'
                 content={
-                  <div>
-                    <Link className='header_subnav_link' to={'/login'}>
-                      Login
-                    </Link>
-                    <Link className='header_subnav_link' to={'/sign-up'}>
-                      Sign Up
-                    </Link>
-                  </div>
+                  !login ? (
+                    <div>
+                      <Link className='header_subnav_link' to={'/login'}>
+                        Login
+                      </Link>
+                      <Link className='header_subnav_link' to={'/sign-up'}>
+                        Sign Up
+                      </Link>
+                    </div>
+                  ) : (
+                    <Popup
+                      popupData={popupUser}
+                      login={login}
+                      handleLogout={handleLogout}
+                    />
+                  )
                 }
               >
                 <div className='header_nav_item user'>
-                  <FontAwesomeIcon icon={faUser} />
+                  {login ? (
+                    <LazyLoadImage src={login.user.photoURL} />
+                  ) : (
+                    <FontAwesomeIcon icon={faUser} />
+                  )}
                 </div>
               </Tippy>
               <div

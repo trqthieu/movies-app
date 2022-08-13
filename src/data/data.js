@@ -33,11 +33,8 @@ const moreNav = {
 export const navList = [movieNav, tvNav, personNav, moreNav]
 export const popupUser = {
   heading: {
-    title: 'Thieu Tran',
-    link: {
-      text: 'View Profile',
-      path: '/profile',
-    },
+    text: 'View Profile',
+    path: '/profile',
   },
   groups: [
     [
@@ -65,12 +62,6 @@ export const popupUser = {
       },
       {
         text: 'Settings',
-        path: '/profile',
-      },
-    ],
-    [
-      {
-        text: 'Logout',
         path: '/profile',
       },
     ],
