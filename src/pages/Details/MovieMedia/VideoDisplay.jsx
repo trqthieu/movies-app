@@ -1,11 +1,16 @@
-import { faPlay } from '@fortawesome/free-solid-svg-icons'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import React, { useState } from 'react'
-import formatDate from 'src/common/formatDate'
-import TrailerPopup from 'src/components/TrailerPopup/TrailerPopup'
+import { faPlay } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import React, { useState } from 'react';
+import formatDate from 'src/common/formatDate';
+import TrailerPopup from 'src/components/TrailerPopup/TrailerPopup';
 
 function VideoDisplay({ videoList }) {
-  const [showVideo, setShowVideo] = useState(false)
+  const [showVideo, setShowVideo] = useState(false);
+  const [videoId, setVideoId] = useState();
+  const handleShowVideo = videoId => {
+    setShowVideo(true);
+    setVideoId(videoId);
+  };
   return (
     <div className='video_list'>
       {videoList.map(video => (
@@ -16,10 +21,13 @@ function VideoDisplay({ videoList }) {
             }}
             className='video_item_background'
           >
-            <div onClick={() => setShowVideo(true)} className='play_icon'>
+            <div
+              onClick={() => handleShowVideo(video.id)}
+              className='play_icon'
+            >
               <FontAwesomeIcon icon={faPlay} />
             </div>
-            {showVideo && (
+            {showVideo && videoId === video.id && (
               <TrailerPopup
                 videoPath={video.key}
                 setShowVideo={setShowVideo}
@@ -36,7 +44,7 @@ function VideoDisplay({ videoList }) {
         </div>
       ))}
     </div>
-  )
+  );
 }
 
-export default VideoDisplay
+export default VideoDisplay;
